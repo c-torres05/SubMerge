@@ -1,2 +1,5 @@
 # SubMerge
-pamela
+Pamela Antonio
+Cynthia Torres-Marquez
+Ethan Wolfe
+
