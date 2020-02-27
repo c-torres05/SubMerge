@@ -12,4 +12,9 @@
     <string name="main_month_tsize">25dp</string>
     <string name="main_add_tsize">25dp</string>
     <string name="main_monthly_tsizez">50dp</string>
+
+    //Login
+    <string name="login_title_text">Log In</string>
+    <string name="login_title_tsize">35dp</string>
+    <string name="login_button_text">Anonymous</string>
 </resources>
