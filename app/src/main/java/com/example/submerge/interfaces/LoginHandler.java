@@ -25,7 +25,7 @@ public class LoginHandler extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logon);
+        setContentView(R.layout.login);
 
         this.anonymousLogin = findViewById(R.id.anon_login_button);
         this.anonymousLogin.setOnClickListener(this::anonLogin);
