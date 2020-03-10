@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".LogonActivity" >
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_title_text"
-        android:textSize="@string/login_title_tsize"
+        android:text="Log In"
+        android:textSize="35dp"
         android:textColor="@color/colorAccent"
         android:textAlignment="center"
         android:layout_centerHorizontal="true"
@@ -16,7 +18,6 @@
         android:layout_marginTop="35dp"/>
 
     <View
-        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_alignParentTop="true"
@@ -32,6 +33,6 @@
         android:layout_marginTop="105dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="@string/login_button_text"
+        android:text="Anonymous"
         android:elevation="2dp"/>
 </RelativeLayout>
