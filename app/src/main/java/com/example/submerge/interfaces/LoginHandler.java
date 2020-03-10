@@ -1,4 +1,4 @@
-package com.example.submerge.Test.Interfaces;
+package com.example.submerge.interfaces;
 
 import android.content.Intent;
 import android.os.Bundle;
