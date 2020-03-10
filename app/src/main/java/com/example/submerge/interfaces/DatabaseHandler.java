@@ -3,6 +3,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.submerge.App;
 import com.example.submerge.R;
 import com.example.submerge.models.AnonCredential;
 import com.example.submerge.models.Callback;
