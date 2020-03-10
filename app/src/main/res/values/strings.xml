@@ -1,12 +1,10 @@
 <resources>
     //App variables
     <string name="app_name">SubMerge</string>
-
+    <string name="stitch_client_app_id">submerge-fkmyh</string>
     //Main screen variables
     //text values
-    <string name="main_month_text">November</string>
     <string name="main_add_text">+</string>
-    <string name="main_montly_cost">$294.53</string>
     <string name="main_login_id_text">Logged in with ID: </string>
     //text sizes
     <string name="main_month_tsize">25dp</string>
