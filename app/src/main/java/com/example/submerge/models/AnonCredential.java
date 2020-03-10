@@ -1,4 +1,4 @@
-package com.example.submerge.Test.models;
+package com.example.submerge.models;
 
 import com.mongodb.stitch.core.auth.ProviderCapabilities;
 import com.mongodb.stitch.core.auth.StitchCredential;
