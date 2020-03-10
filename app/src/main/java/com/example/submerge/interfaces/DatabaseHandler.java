@@ -3,7 +3,15 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.submerge.R;
+import com.example.submerge.models.AnonCredential;
+import com.example.submerge.models.Callback;
+import com.example.submerge.models.Result;
 import com.example.submerge.models.Subscription;
+import com.example.submerge.models.SubscriptionDBObject;
+import com.example.submerge.models.SubscriptionPackager;
+import com.example.submerge.models.User;
+import com.example.submerge.models.requests.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.mongodb.stitch.android.core.auth.StitchUser;

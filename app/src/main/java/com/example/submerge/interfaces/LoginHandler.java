@@ -9,12 +9,10 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.submerge.DatabaseHandler;
 import com.example.submerge.R;
-import com.example.submerge.Test.Requests.AddRequest;
-import com.example.submerge.Test.models.Callback;
-import com.example.submerge.Test.models.Result;
-import com.example.submerge.Test.models.User;
+import com.example.submerge.models.Callback;
+import com.example.submerge.models.Result;
+import com.example.submerge.models.User;
 
 import org.bson.types.ObjectId;
 
