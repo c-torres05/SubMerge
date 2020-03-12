@@ -1,6 +1,24 @@
 <resources>
     //App variables
     <string name="app_name">SubMerge</string>
+    <string-array name="my_subscriptions">
+        <item>Netflix</item>
+        <item>Hulu</item>
+        <item>Disney+</item>
+        <item>Adobe</item>
+        <item>Spotify</item>
+        <item>Amazon Prime</item>
+        <item>YouTube</item>
+        <item>DropBox</item>
+        <item>Nintendo Online</item>
+        <item>HBO NOW</item>
+        <item>Blue Apron</item>
+        <item>IPSY</item>
+        <item>Apple Music</item>
+        <item>Apple TV+</item>
+        <item>SoundCloud</item>
+        <item>Pandora</item>
+    </string-array>
 
     //Main screen variables
     //text values
