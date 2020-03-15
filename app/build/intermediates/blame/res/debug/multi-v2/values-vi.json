@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/SarahHassan/Documents/Repos/Submerge/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-vi/values-vi.xml",
+            "outputFile": "/Users/SarahHassan/Documents/Repos/SubMerge/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-vi/values-vi.xml",
             "map": [
                 {
                     "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/6119d746697059b7e1b74aab4d181f56/appcompat-1.1.0/res/values-vi/values-vi.xml",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/456c7acda939f16e17afc05d811de5ea/jetified-play-services-basement-15.0.1/res/values-vi/values.xml",
+                    "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/c8de711909da6a5a947509d432f89103/jetified-play-services-basement-15.0.1/res/values-vi/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/SarahHassan/Documents/Repos/Submerge/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ta/values-ta.xml",
+            "outputFile": "/Users/SarahHassan/Documents/Repos/SubMerge/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-ta/values-ta.xml",
             "map": [
                 {
                     "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/6119d746697059b7e1b74aab4d181f56/appcompat-1.1.0/res/values-ta/values-ta.xml",
@@ -21,23 +21,6 @@
                     }
                 },
                 {
-                    "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/456c7acda939f16e17afc05d811de5ea/jetified-play-services-basement-15.0.1/res/values-ta/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "224",
-                        "endOffsets": "471"
-                    },
-                    "to": {
-                        "startLines": "29",
-                        "startColumns": "4",
-                        "startOffsets": "2871",
-                        "endColumns": "224",
-                        "endOffsets": "3091"
-                    }
-                },
-                {
                     "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/e9dab9c67c1ee3668e0bbf86c6d8cbd8/core-1.1.0/res/values-ta/values-ta.xml",
                     "from": {
                         "startLines": "2",
@@ -52,6 +35,23 @@
                         "startOffsets": "3177",
                         "endColumns": "100",
                         "endOffsets": "3273"
+                    }
+                },
+                {
+                    "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/c8de711909da6a5a947509d432f89103/jetified-play-services-basement-15.0.1/res/values-ta/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "224",
+                        "endOffsets": "471"
+                    },
+                    "to": {
+                        "startLines": "29",
+                        "startColumns": "4",
+                        "startOffsets": "2871",
+                        "endColumns": "224",
+                        "endOffsets": "3091"
                     }
                 }
             ]
