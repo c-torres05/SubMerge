@@ -31,20 +31,20 @@ public class LoginHandler extends AppCompatActivity {
 
     private void anonLogin(View view) {
         handler = new DatabaseHandler();
-        MainInterface.setHandler(handler);
+        SearchInterface.setHandler(handler);
 
         handler.loginAnon();
         handler.finishInit();
 
         User user = new User(new ObjectId(), handler.getUserId(), handler.getName(), User.ANON_TYPE);
-        handler.addUser(new AddRequest(user, null), new Callback<User, String>() {
+        handler.addUser(new SearchRequest(user, null), new Callback<User, String>() {
             @Override
             public void onComplete(Result<User, String> result) {
                 Log.i("SubMerge", "Added user!");
             }
         });
 
-        Intent main = new Intent(this, MainInterface.class);
+        Intent main = new Intent(this, SearchInterface.class);
         main.putExtra("user_object_id", user.get_id().toString());
         main.putExtra("user_owner_id", user.getOwner_id());
         main.putExtra("user_user_id", user.getUser_Id());

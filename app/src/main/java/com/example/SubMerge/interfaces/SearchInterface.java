@@ -1,4 +1,4 @@
-package com.example.SubMerge.interfaces;
+package com.example.submerge.interfaces;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.submerge.R; // Fixed R Package Issue 
@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 public class SearchInterface extends AppCompatActivity {
 
+    static DatabaseHandler handler;
     ListView search_subscriptions;
     ArrayAdapter<String> adapter;
 
@@ -59,5 +60,9 @@ public class SearchInterface extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public static void setHandler(DatabaseHandler new_handler) {
+        handler = new_handler;
     }
 }
