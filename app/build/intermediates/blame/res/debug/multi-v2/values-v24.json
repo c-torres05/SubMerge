@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/SarahHassan/Documents/Repos/Submerge/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
+            "outputFile": "/Users/SarahHassan/Documents/Repos/SubMerge/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
                     "source": "/Users/SarahHassan/.gradle/caches/transforms-2/files-2.1/6119d746697059b7e1b74aab4d181f56/appcompat-1.1.0/res/values-v24/values-v24.xml",
