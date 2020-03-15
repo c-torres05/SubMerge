@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="DATABASE">SubMergeData</string>
+    <string name="USER_COLLECTION">Users</string>
+    <string name="SUBSCRIPTION_COLLECTION">Subscriptions</string>
+    <string name="SUPPORTED_SUBSCRIPTION_COLLECTION">SupportSubscriptions</string>
+</resources>
