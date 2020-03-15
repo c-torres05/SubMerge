@@ -1,4 +1,4 @@
-package com.example.SubMerge.models.requests;
+package com.example.submerge.models.requests;
 
 import com.example.submerge.models.Subscription;
 import com.example.submerge.models.User;

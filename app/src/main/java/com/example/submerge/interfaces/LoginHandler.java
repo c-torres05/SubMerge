@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.submerge.R;
+import com.example.submerge.models.requests.SearchRequest;
 import com.example.submerge.models.Callback;
 import com.example.submerge.models.Result;
 import com.example.submerge.models.User;
