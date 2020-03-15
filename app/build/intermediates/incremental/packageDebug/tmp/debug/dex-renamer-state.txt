@@ -1,7 +1,0 @@
-#Sat Mar 14 16:44:48 PDT 2020
-base.0=/Users/SarahHassan/Documents/Repos/SubMerge/app/build/intermediates/dex/debug/mergeExtDexDebug/out/classes.dex
-path.1=classes.dex
-renamed.1=classes2.dex
-path.0=classes.dex
-renamed.0=classes.dex
-base.1=/Users/SarahHassan/Documents/Repos/SubMerge/app/build/intermediates/dex/debug/mergeProjectDexDebug/out/classes.dex
