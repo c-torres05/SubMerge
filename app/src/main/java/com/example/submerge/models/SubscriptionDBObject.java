@@ -1,7 +1,6 @@
 package com.example.submerge.models;
 
 import org.bson.BsonArray;
-import org.bson.BsonBoolean;
 import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.BsonObjectId;
