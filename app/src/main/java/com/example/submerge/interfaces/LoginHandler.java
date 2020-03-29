@@ -31,25 +31,30 @@ public class LoginHandler extends AppCompatActivity {
     }
 
     private void anonLogin(View view) {
+        Intent main = new Intent(this, SearchInterface.class);
         handler = new DatabaseHandler();
         SearchInterface.setHandler(handler);
 
-        handler.loginAnon();
-        handler.finishInit();
-
-        User user = new User(new ObjectId(), handler.getUserId(), handler.getName(), User.ANON_TYPE);
-        handler.addUser(new SearchRequest(user, null), new Callback<User, String>() {
+        handler.loginAnon(new Callback<Boolean, String>() {
             @Override
-            public void onComplete(Result<User, String> result) {
-                Log.i("SubMerge", "Added user!");
+            public void onComplete(Result<Boolean, String> result) {
+                handler.finishInit();
+
+                User user = new User(new ObjectId(), handler.getUserId(), handler.getName(), User.ANON_TYPE);
+                Log.d("SubMerge", user.toString());
+                handler.addUser(new SearchRequest(user, null), new Callback<User, String>() {
+                    @Override
+                    public void onComplete(Result<User, String> result) {
+                        Log.i("SubMerge", "Added user!");
+                    }
+                });
+
+                main.putExtra("user_object_id", user.get_id().toString());
+                main.putExtra("user_owner_id", user.getOwner_id());
+                main.putExtra("user_user_id", user.getUser_Id());
+                main.putExtra("user_type", user.getType());
+                startActivity(main);
             }
         });
-
-        Intent main = new Intent(this, SearchInterface.class);
-        main.putExtra("user_object_id", user.get_id().toString());
-        main.putExtra("user_owner_id", user.getOwner_id());
-        main.putExtra("user_user_id", user.getUser_Id());
-        main.putExtra("user_type", user.getType());
-        startActivity(main);
     }
 }

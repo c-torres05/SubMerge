@@ -105,7 +105,7 @@ public class DatabaseHandler {
 
     }
 
-    public void loginAnon() {
+    public void loginAnon(Callback<Boolean, String> callback) {
         Log.d("stitch", "logging in anonymously");
 
         String name = getAlphaNumericString(15);
@@ -120,9 +120,13 @@ public class DatabaseHandler {
                         if (task.isSuccessful()) {
                             Log.d("stitch", "logged in with custom function auth as user " + task.getResult().getId());
                             userId = client.getAuth().getUser().getId();
+                            callback.onComplete(new Result<Boolean, String>(true, "", true));
+//                            userId = task.getResult().getId();
+//                            Log.d("SubMerge", client.getAuth().getUser().toString());
                         } else {
                             Log.e("stitch", "failed to log in with custom function auth:", task.getException());
                             userId = null;
+                            callback.onComplete(new Result<Boolean, String>(null, "Login failed!", false));
                         }
                     }
                 });
@@ -156,6 +160,7 @@ public class DatabaseHandler {
             public void onComplete(@NonNull Task<User> task) {
                 if (task.isSuccessful()) {
                     if (task.getResult() == null) {
+                        Log.d("SubMerge", add_request.getUser().toString());
                         Task<RemoteInsertOneResult> task2 = users.insertOne(add_request.getUser());
                         task2.addOnCompleteListener(new OnCompleteListener<RemoteInsertOneResult>() {
                             @Override
@@ -182,6 +187,7 @@ public class DatabaseHandler {
                             }
                         });
                     } else {
+                        Log.d("SubMerge", task.getResult().toString());
                         Log.e("SubMerge", "Could not add user", new Exception("Duplicate user"));
                         result.onComplete(new Result<>(null, "Duplicate user!", false));
                     }
