@@ -1,5 +1,7 @@
 package com.example.submerge.models;
 
+import androidx.annotation.NonNull;
+
 import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.BsonObjectId;
@@ -99,4 +101,16 @@ public class User {
             return fromBsonDocument(document);
         }
     };
+
+    @NonNull
+    @Override
+    public String toString() {
+        String result = "\n";
+        result += "User: ";
+        result += "\t_id: " + get_id();
+        result += "\towner_id: " + getOwner_id();
+        result += "\tuser_id: " + getUser_Id();
+        result += "\n";
+        return result;
+    }
 }
