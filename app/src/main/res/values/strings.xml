@@ -1,0 +1,37 @@
+<resources>
+    //App variables
+    <string name="app_name">SubMerge</string>
+    <string name="stitch_client_app_id">submerge-fkmyh</string>
+    //Main screen variables
+    //text values
+    <string name="main_add_text">+</string>
+    <string name="main_login_id_text">Logged in with ID: </string>
+    //text sizes
+    <string name="main_month_tsize">25dp</string>
+    <string name="main_add_tsize">25dp</string>
+    <string name="main_monthly_tsizez">50dp</string>
+
+    //Login
+    <string name="login_title_text">Log In</string>
+    <string name="login_title_tsize">35dp</string>
+    <string name="login_button_text">Anonymous</string>
+    //Search Variables
+    <string-array name="my_subscriptions">
+        <item>Netflix</item>
+        <item>Hulu</item>
+        <item>Disney+</item>
+        <item>Adobe</item>
+        <item>Spotify</item>
+        <item>Amazon Prime</item>
+        <item>YouTube</item>
+        <item>DropBox</item>
+        <item>Nintendo Online</item>
+        <item>HBO NOW</item>
+        <item>Blue Apron</item>
+        <item>IPSY</item>
+        <item>Apple Music</item>
+        <item>Apple TV+</item>
+        <item>SoundCloud</item>
+        <item>Pandora</item>
+    </string-array>
+</resources>
