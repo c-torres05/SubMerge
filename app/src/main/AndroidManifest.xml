@@ -17,6 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".interfaces.SearchInterface"/>
+        <activity android:name=".interfaces.MainInterface"/>
     </application>
-
 </manifest>
