@@ -31,9 +31,9 @@ public class LoginHandler extends AppCompatActivity {
     }
 
     private void anonLogin(View view) {
-        Intent main = new Intent(this, SearchInterface.class);
+        Intent main = new Intent(this, MainInterface.class);
         handler = new DatabaseHandler();
-        SearchInterface.setHandler(handler);
+        MainInterface.setHandler(handler);
 
         handler.loginAnon(new Callback<Boolean, String>() {
             @Override
