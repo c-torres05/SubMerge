@@ -34,4 +34,15 @@
         <item>SoundCloud</item>
         <item>Pandora</item>
     </string-array>
+
+    //EDIT
+    <string name="name">Name Of Subscription:</string>
+    <string name="payment">Select Payment Due Date:</string>
+    <string name="recurrence">Recurrence Of Payment:</string>
+    <string name="cost">Cost:</string>
+    <string name="example">Ex: Netflix</string>
+    <string name="payment_ex">MM/DD/YYY</string>
+    <string name="recur_ex">Weekly/Bi-Weekly/Monthly/Yearly</string>
+    <string name="cost_ex">Ex: $12.99</string>
+    <string name="button">SAVE</string>
 </resources>

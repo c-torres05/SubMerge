@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--    tools:context=".MainActivity">-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="122dp">
+
+        <!--Subscription Name-->
+        <TextView
+            android:id="@+id/sub_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/name" />
+        <EditText
+            android:id="@+id/sub_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@string/example" />
+
+        <!--Renewal Date-->
+        <TextView
+            android:id="@+id/renewal_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/payment" />
+        <TextView
+            android:id="@+id/select_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_ex"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <!--Payment Recurrence-->
+        <TextView
+            android:id="@+id/payment_recurrence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recurrence" />
+        <EditText
+            android:id="@+id/recur_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="@string/recur_ex" />
+
+        <!--Cost-->
+        <TextView
+            android:id="@+id/cost_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cost"/>
+        <EditText
+            android:id="@+id/cost_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="@string/cost_ex"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button" />
+
+    </LinearLayout>
+</RelativeLayout>
