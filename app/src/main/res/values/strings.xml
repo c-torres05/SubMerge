@@ -43,6 +43,7 @@
     <string name="example">Ex: Netflix</string>
     <string name="payment_ex">MM/DD/YYY</string>
     <string name="recur_ex">Weekly/Bi-Weekly/Monthly/Yearly</string>
+    <string name="select">-SELECT-</string>
     <string name="cost_ex">Ex: $12.99</string>
     <string name="button">SAVE</string>
 </resources>
