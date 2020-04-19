@@ -76,6 +76,8 @@ public class MainInterface extends AppCompatActivity {
         notificationHandler.mNotificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
         notificationHandler.notificationCompatBuilder = new NotificationCompat.Builder( getApplicationContext(), NotificationHandler.CHANNEL_ID);
 
+        RecyclerItemClickListener.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> gotoDetail(v, position));
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
@@ -142,6 +144,19 @@ public class MainInterface extends AppCompatActivity {
         User.encode_intent(search, user);
 
         startActivityForResult(search, 1);
+    }
+
+    public void gotoDetail(View v, int position) {
+        Log.i("SubMerge-Info", "Going to Search Page");
+
+//        DetailInterface.setDatabaseHandler(databaseHandler);
+//        DetailInterface.setNotificationHandler(notificationHandler);
+//
+//        Intent detail = new Intent(this, DetailInterface.class);
+//        User.encode_intent(detail, user);
+//        Subscription.encode_intent(detail, adapter.getList().get(position));
+//
+//        startActivityForResult(detail, 1);
     }
 
     @Override
