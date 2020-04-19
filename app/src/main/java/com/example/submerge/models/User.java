@@ -1,5 +1,7 @@
 package com.example.submerge.models;
 
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 
 import org.bson.BsonDocument;
@@ -13,6 +15,8 @@ import org.bson.codecs.Codec;
 import org.bson.codecs.DecoderContext;
 import org.bson.codecs.EncoderContext;
 import org.bson.types.ObjectId;
+
+import java.util.Objects;
 
 public class User {
     public static final int UNKNOWN_TYPE = 0;
@@ -37,6 +41,21 @@ public class User {
         this.owner_id = owner_id;
         this.user_id = user_id;
         this.type = type;
+    }
+
+    public static User decode_intent(Intent intent) {
+        ObjectId object_id = new ObjectId(Objects.requireNonNull(intent.getStringExtra("user_object_id")));
+        String owner_id = intent.getStringExtra("user_owner_id");
+        String user_id = intent.getStringExtra("user_user_id");
+        int type = intent.getIntExtra("user_type", User.UNKNOWN_TYPE);
+        return new User(object_id, owner_id, user_id, type);
+    }
+
+    public static void encode_intent(Intent intent, User user) {
+        intent.putExtra("user_object_id", user.get_id().toString());
+        intent.putExtra("user_owner_id", user.getOwner_id());
+        intent.putExtra("user_user_id", user.getUser_Id());
+        intent.putExtra("user_type", user.getType());
     }
 
     public ObjectId get_id() {
