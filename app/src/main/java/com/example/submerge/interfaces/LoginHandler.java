@@ -12,10 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.submerge.R;
 import com.example.submerge.models.Callback;
 import com.example.submerge.models.Result;
+import com.example.submerge.models.Subscription;
 import com.example.submerge.models.User;
 import com.example.submerge.models.requests.Request;
 
 import org.bson.types.ObjectId;
+
+import java.util.Date;
 
 public class LoginHandler extends AppCompatActivity {
     Button anonymousLogin;
@@ -74,7 +77,6 @@ public class LoginHandler extends AppCompatActivity {
     private void gotoMainScreen() {
         Intent main = new Intent(this, MainInterface.class);
         handler.finishInit();
-
         addUser(result -> {
             if (result.isSuccessful()) {
                 User.encode_intent(main, result.getResult());
