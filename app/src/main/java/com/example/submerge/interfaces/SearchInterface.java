@@ -1,51 +1,64 @@
 package com.example.submerge.interfaces;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.submerge.R; // Fixed R Package Issue 
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.submerge.models.Subscription;
+
+import com.example.submerge.R; // Fixed R Package Issue
+import com.example.submerge.models.User;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.SearchView;
+import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+
 
 public class SearchInterface extends AppCompatActivity {
 
-    static DatabaseHandler handler;
-    ListView search_subscriptions;
-    ArrayAdapter<String> adapter;
+    static DatabaseHandler databaseHandler;
+    static NotificationHandler notificationHandler;
+    static User user;
+    RecyclerView recyclerView;
+    SearchAdapter searchAdapter;
 
+    List<Subscription> subsList;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        search_subscriptions = (ListView) findViewById(R.id.search_subscriptions);
+        decodeIntent(getIntent());
 
-        ArrayList<String> arraySubscriptions = new ArrayList<>();
-        arraySubscriptions.addAll(Arrays.asList(getResources().getStringArray(R.array.my_subscriptions)));
+        subsList = new ArrayList<>();
+        searchAdapter = new SearchAdapter(subsList);
 
-        adapter = new ArrayAdapter<String>(
-                SearchInterface.this,
-                android.R.layout.simple_list_item_1,
-                arraySubscriptions
-        );
+        databaseHandler.getSearchSubscriptions(result -> {
+            for (Subscription sub : result.getResult()) {
+                searchAdapter.addItem(sub);
+            }
+        });
 
-        search_subscriptions.setAdapter(adapter);
-    }
+        recyclerView = findViewById(R.id.recyclerView);
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(searchAdapter);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-        MenuItem item = menu.findItem(R.id.search_subscriptions);
-        SearchView searchView = (SearchView)item.getActionView();
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(dividerItemDecoration);
 
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -54,15 +67,58 @@ public class SearchInterface extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
+                searchAdapter.getFilter().filter(newText);
                 return false;
             }
         });
 
-        return super.onCreateOptionsMenu(menu);
+        RecyclerItemClickListener.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> gotoEdit(v, position));
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Intent main = new Intent();
+                setResult(Activity.RESULT_CANCELED, main);
+                finish();
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
-    public static void setHandler(DatabaseHandler new_handler) {
-        handler = new_handler;
+    public void gotoEdit(View view, int posistion) {
+        Intent edit = new Intent(this, Edit.class);
+
+        Edit.setNotificationHandler(notificationHandler);
+
+        edit.putExtra("from", "search");
+
+        Subscription.encode_intent(edit, searchAdapter.get(posistion));
+        User.encode_intent(edit, SearchInterface.user);
+
+        startActivityForResult(edit, 2);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void decodeIntent(Intent intent) {
+        Intent from_main = getIntent();
+        user = User.decode_intent(from_main);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.i("SubMerge", "finishing!");
+
+        setResult(resultCode, data);
+        finish();
+    }
+
+    public static void setDatabaseHandler(DatabaseHandler new_handler) {
+        databaseHandler = new_handler;
+    }
+
+    public static void setNotificationHandler(NotificationHandler new_handler) {
+        notificationHandler = new_handler;
     }
 }

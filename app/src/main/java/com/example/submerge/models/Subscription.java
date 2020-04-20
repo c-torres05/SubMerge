@@ -1,21 +1,103 @@
 package com.example.submerge.models;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.submerge.R;
 import org.bson.types.ObjectId;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class Subscription {
+    public static Subscription decode_intent(Intent intent) {
+        //Guareenteed to be there
+        int image = intent.getIntExtra("sub_image", R.drawable.netflix);
+        String title = intent.getStringExtra("sub_name");
+        double cost = intent.getDoubleExtra("sub_cost", 0.00);
+        Date renewal = renewalFromString(Objects.requireNonNull(intent.getStringExtra("sub_renewal")));
+        int recurrence = recurrenceFromString(Objects.requireNonNull(intent.getStringExtra("sub_recurrence")));
+        boolean trial = intent.getBooleanExtra("sub_trial", false);
+        double change = intent.getDoubleExtra("sub_change", 0.00);
+        return new Subscription(image, String.format("%s", title), trial, renewal, recurrence, cost, change);
+    }
+
+    public static void encode_intent(Intent intent, Subscription subscription) {
+        intent.putExtra("sub_image", subscription.getImage());
+        intent.putExtra("sub_name", subscription.getTitle());
+        intent.putExtra("sub_cost", subscription.accessCost());
+        intent.putExtra("sub_renewal", renewalFromDate(new Date(subscription.accessRenewal())));
+        intent.putExtra("sub_recurrence", recurrenceFromInt(subscription.accessRecurrance()));
+        intent.putExtra("sub_trial", subscription.accessTrial());
+        intent.putExtra("sub_change", subscription.accessChange());
+    }
+
+    public static Date renewalFromString(String input) {
+        Calendar calendar = Calendar.getInstance();
+        int first_slash = input.indexOf('/');
+        int second_slash = input.indexOf('/', first_slash + 1);
+        int month = Integer.parseInt(input.substring(0, first_slash)) - 1;
+        int day = Integer.parseInt(input.substring(first_slash + 1, second_slash));
+        int year = Integer.parseInt(input.substring(second_slash + 1));
+        calendar.set(year, month, day);
+        return calendar.getTime();
+    }
+
+    public static String renewalFromDate(Date input) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(input);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        return String.format(Locale.ENGLISH, "%d/%d/%d", month + 1, dayOfMonth, year);
+    }
+
+    public static int recurrenceFromString(String input) {
+        switch(input) {
+            case "Weekly":
+                return Subscription.Recurrences.WEEKLY;
+            case "Bi-Weekly":
+                return Subscription.Recurrences.BI_WEEKLY;
+            case "Monthly":
+                return Subscription.Recurrences.MONTHLY;
+            case "Yearly":
+                return Subscription.Recurrences.YEARLY;
+            default:
+                return Integer.parseInt(input);
+        }
+    }
+
+    public static String recurrenceFromInt(int input) {
+        switch (input) {
+            case Recurrences.DAILY:
+                return "Daily";
+            case Recurrences.BI_DAILY:
+                return "Bi-Daily";
+            case Recurrences.WEEKLY:
+                return "Weekly";
+            case Recurrences.BI_WEEKLY:
+                return "Bi-Weekly";
+            case Recurrences.MONTHLY:
+                return "Monthly";
+            case Recurrences.YEARLY:
+                return "Yearly";
+            case Recurrences.BI_YEARLY:
+                return "Bi-Yearly";
+            default:
+                return Integer.toString(input);
+        }
+    }
+
     public static final class Types {
         static final int MAIN = 0;
         static final int SEARCH = 1;
         static final int DATABASE = 2;
     }
 
-    public static final class Reccurances {
+    public static final class Recurrences {
         public static final int DAILY = 1;
         public static final int BI_DAILY = 3;
         public static final int WEEKLY = 7;
@@ -24,6 +106,11 @@ public class Subscription {
         public static final int YEARLY = 365;
         public static final int BI_YEARLY = YEARLY * 2;
     }
+
+    public static final String[] MONTHS = {"January", "February",
+            "March", "April", "May", "June", "July",
+            "August", "September", "October", "November",
+            "December"};
 
     private final ObjectId _id;
     private final String owner_id;
@@ -121,6 +208,14 @@ public class Subscription {
 
     public String getTitle() {
         return this.title;
+    }
+
+    public String getRenewal() {
+        return renewalFromDate(this.renewal);
+    }
+
+    public String getRecurrence() {
+        return recurrenceFromInt(this.recurrance);
     }
 
     public String getMessage() {

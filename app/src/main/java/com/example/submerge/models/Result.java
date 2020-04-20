@@ -29,7 +29,7 @@ public final class Result<SuccessTypeT, FailureTypeT> {
      *
      * @return The result of the operation.
      */
-    public SuccessTypeT geResult() {
+    public SuccessTypeT getResult() {
         if (!isSuccessful) {
             throw new IllegalStateException("operation was failed, not successful");
         }
