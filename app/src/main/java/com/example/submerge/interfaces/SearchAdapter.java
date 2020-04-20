@@ -36,6 +36,10 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         notifyItemInserted(subsList.size() - 1);
     }
 
+    public Subscription get(int index) {
+        return this.subsList.get(index);
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
