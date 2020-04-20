@@ -54,7 +54,7 @@ public class MainInterface extends AppCompatActivity {
         setContentView(R.layout.main); //Set the view of this interface here
 
         this.add_button = findViewById(R.id.add_item);
-        this.notification_button = findViewById(R.id.test_notification);
+//        this.notification_button = findViewById(R.id.test_notification);
         this.recyclerView = findViewById(R.id.list_items);
         this.current_month = findViewById(R.id.current_month);
         this.total_cost = findViewById(R.id.current_cost);
@@ -70,7 +70,7 @@ public class MainInterface extends AppCompatActivity {
     public void makeListeners() {
         add_button.setOnClickListener(this::goToSearchPage);
 
-        notification_button.setOnClickListener(this::sendNotification);
+//        notification_button.setOnClickListener(this::sendNotification);
 
         notificationHandler = new NotificationHandler();
         notificationHandler.mNotificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
@@ -141,13 +141,13 @@ public class MainInterface extends AppCompatActivity {
         //SearchInterface.setNotificationHandler(notificationHandler);
 
         Intent search = new Intent(this, SearchInterface.class);
-        //User.encode_intent(search, user);
+        User.encode_intent(search, user);
 
         startActivityForResult(search, 1);
     }
 
     public void gotoDetail(View v, int position) {
-        Log.i("SubMerge-Info", "Going to Search Page");
+        Log.i("SubMerge-Info", "Going to Detail Page");
 
 //        DetailInterface.setDatabaseHandler(databaseHandler);
 //        DetailInterface.setNotificationHandler(notificationHandler);

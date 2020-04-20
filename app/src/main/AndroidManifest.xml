@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".interfaces.SearchInterface"/>
+        <activity android:name=".interfaces.Edit"/>
         <activity android:name=".interfaces.MainInterface"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask">
@@ -25,7 +26,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".interfaces.NotificationHandler" />
-
         <service android:name=".interfaces.BigTextIntentService" />
     </application>
 </manifest>

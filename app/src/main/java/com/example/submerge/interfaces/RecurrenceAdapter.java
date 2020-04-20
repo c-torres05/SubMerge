@@ -16,8 +16,7 @@ import java.util.ArrayList;
 
 public class RecurrenceAdapter extends ArrayAdapter<RecurrenceItem> {
 
-    public RecurrenceAdapter(Context context, ArrayList<RecurrenceItem> recurr)
-    {
+    public RecurrenceAdapter(Context context, ArrayList<RecurrenceItem> recurr) {
         super(context, 0, recurr);
     }
 
@@ -32,17 +31,15 @@ public class RecurrenceAdapter extends ArrayAdapter<RecurrenceItem> {
         return initView(position, convertView, parent);
     }
 
-    private View initView(int position, View convertView, ViewGroup parent)
-    {
-        if ( convertView == null )
-        {
-            convertView = LayoutInflater.from( getContext() ).inflate(R.layout.edit_spinner, parent, false);
+    private View initView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.edit_spinner, parent, false);
         }
-        TextView textView = convertView.findViewById( R.id.spinner_text_view);
+        TextView textView = convertView.findViewById(R.id.spinner_text_view);
 
         RecurrenceItem recur = getItem(position);
 
-        if ( recur != null )
+        if (recur != null)
             textView.setText(recur.getRecurrence());
 
         return convertView;
