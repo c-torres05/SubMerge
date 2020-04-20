@@ -138,10 +138,10 @@ public class MainInterface extends AppCompatActivity {
         Log.i("SubMerge-Info", "Going to Search Page");
 
         SearchInterface.setDatabaseHandler(databaseHandler);
-        SearchInterface.setNotificationHandler(notificationHandler);
+        //SearchInterface.setNotificationHandler(notificationHandler);
 
         Intent search = new Intent(this, SearchInterface.class);
-        User.encode_intent(search, user);
+        //User.encode_intent(search, user);
 
         startActivityForResult(search, 1);
     }
