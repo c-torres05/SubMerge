@@ -1,6 +1,5 @@
 package com.example.submerge.interfaces;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +47,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
     public void addItem(Subscription sub) {
         this.list.add(sub);
         this.listFull.add(sub);
-        Log.i("SubMerge", "added Item!");
         notifyItemInserted(list.size() - 1);
     }
 
@@ -57,7 +55,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         this.list.remove(sub);
         this.listFull.remove(sub);
         notifyItemInserted(index);
-        Log.i("SubMerge", "removed Item!");
     }
 
     @NonNull
@@ -84,8 +81,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         return list.size();
     }
 
-    public Filter getFilter() {
-        return exampleFilter;
+    public List<Subscription> getList() {
+        return list;
     }
 
     private Filter exampleFilter = new Filter() {

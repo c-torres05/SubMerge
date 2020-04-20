@@ -10,16 +10,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.submerge.R;
-import com.example.submerge.models.requests.SearchRequest;
 import com.example.submerge.models.Callback;
 import com.example.submerge.models.Result;
 import com.example.submerge.models.User;
+import com.example.submerge.models.requests.Request;
 
 import org.bson.types.ObjectId;
 
 public class LoginHandler extends AppCompatActivity {
     Button anonymousLogin;
+
     DatabaseHandler handler;
+    boolean logging_in = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,32 +29,57 @@ public class LoginHandler extends AppCompatActivity {
         setContentView(R.layout.login);
 
         this.anonymousLogin = findViewById(R.id.anon_login_button);
-        this.anonymousLogin.setOnClickListener(this::anonLogin);
+        this.anonymousLogin.setOnClickListener((View view) -> login(view, "anon"));
     }
 
-    private void anonLogin(View view) {
+    private void login(View view, String type) {
+        if (!logging_in) {
+            logging_in = true;
+
+            handler = new DatabaseHandler();
+            MainInterface.setDatabaseHandler(handler);
+
+            switch (type) {
+                case "anon":
+                    anonLogin();
+                    break;
+                case "user-pass":
+                    break;
+                case "google":
+                    break;
+            }
+        } else {
+            Log.e("SubMerge", "Already logging in!");
+        }
+    }
+
+    private void anonLogin() {
+        handler.loginAnon(result -> {
+            Log.d("SubMerger", "Logged in anonymously!");
+            if (result.isSuccessful()) {
+                gotoMainScreen();
+            }
+        });
+    }
+
+    private void addUser(Callback<User, String> callback) {
+        User user = new User(new ObjectId(), handler.getUserId(), handler.getName(), User.ANON_TYPE);
+
+        handler.addUser(new Request(user, null), result -> {
+            Log.i("SubMerge", "Added user!");
+            callback.onComplete(new Result<>(user, "", result.isSuccessful()));
+        });
+    }
+
+    private void gotoMainScreen() {
         Intent main = new Intent(this, MainInterface.class);
-        handler = new DatabaseHandler();
-        MainInterface.setHandler(handler);
+        handler.finishInit();
 
-        handler.loginAnon(new Callback<Boolean, String>() {
-            @Override
-            public void onComplete(Result<Boolean, String> result) {
-                handler.finishInit();
-
-                User user = new User(new ObjectId(), handler.getUserId(), handler.getName(), User.ANON_TYPE);
-                Log.d("SubMerge", user.toString());
-                handler.addUser(new SearchRequest(user, null), new Callback<User, String>() {
-                    @Override
-                    public void onComplete(Result<User, String> result) {
-                        Log.i("SubMerge", "Added user!");
-                    }
-                });
-
-                main.putExtra("user_object_id", user.get_id().toString());
-                main.putExtra("user_owner_id", user.getOwner_id());
-                main.putExtra("user_user_id", user.getUser_Id());
-                main.putExtra("user_type", user.getType());
+        addUser(result -> {
+            if (result.isSuccessful()) {
+                User.encode_intent(main, result.getResult());
+                main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                main.putExtra("from", "login");
                 startActivity(main);
             }
         });

@@ -15,6 +15,10 @@
     <string name="login_title_text">Log In</string>
     <string name="login_title_tsize">35dp</string>
     <string name="login_button_text">Anonymous</string>
+
+    //Notifications
+    <string name="inspectLabel">See More</string>
+
     //Search Variables
     <string-array name="my_subscriptions">
         <item>Netflix</item>
