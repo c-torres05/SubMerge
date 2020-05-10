@@ -26,7 +26,6 @@ import java.util.List;
 
 public class SearchInterface extends AppCompatActivity {
 
-    static DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
     static NotificationHandler notificationHandler;
     static User user;
     RecyclerView recyclerView;
@@ -44,8 +43,7 @@ public class SearchInterface extends AppCompatActivity {
 
         subsList = new ArrayList<>();
         searchAdapter = new SearchAdapter(subsList);
-
-        databaseHandler.getSearchSubscriptions(result -> {
+        DatabaseHandler.getInstance().getSearchSubscriptions(result -> {
             for (Subscription sub : result.getResult()) {
                 sub.setImageDrawable(getResources().getIdentifier(sub.getImage().toLowerCase(), "drawable", this.getPackageName()));
                 searchAdapter.addItem(sub);

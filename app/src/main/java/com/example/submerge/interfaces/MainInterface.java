@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.submerge.R;
 import com.example.submerge.calendar.CalendarView;
 import com.example.submerge.calendar.EventDay;
+import com.example.submerge.calendar.exceptions.OutOfDateRangeException;
 import com.example.submerge.calendar.listeners.OnCalendarPageChangeListener;
 import com.example.submerge.models.Subscription;
 import com.example.submerge.models.User;
@@ -28,6 +29,7 @@ import com.example.submerge.models.requests.Request;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -121,8 +123,12 @@ public class MainInterface extends AppCompatActivity {
 
     public void decodeIntent(Intent intent) {
         switch (Objects.requireNonNull(intent.getStringExtra("from"))) {
-            case "login":
+            case "login-anon":
                 user = User.decode_intent(intent);
+                break;
+            case "login-user":
+                user = User.decode_intent(intent);
+                loadSubscriptions();
                 break;
             case "edit-add":
                 Log.i("SubMerge", "Come back from search");
@@ -136,8 +142,21 @@ public class MainInterface extends AppCompatActivity {
     }
 
     public void goBackToLogin() {
+//        this.cost = 0;
+//        this.total_cost.setText("$0.00");
+//        this.subscriptions.clear();
+//        this.calendar.setEvents(Collections.emptyList());
+//        try {
+//            this.calendar.setDate(new Date());
+//        } catch (OutOfDateRangeException e) {
+//            Log.e(TAG, "INVALID DATE!");
+//        }
+//        refreshCalendar();
+//        this.adapter.notifyDataSetChanged();
+//        this.user = null;
+
         Intent login = new Intent(this, LoginHandler.class);
-        login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(login);
     }
 
@@ -184,6 +203,19 @@ public class MainInterface extends AppCompatActivity {
             if (result.isSuccessful()) {
                 Log.i(TAG, String.format("Added -> %s - %s", sub.getTitle(), sub.getCost()));
                 subscriptions.add(sub);
+                refreshCalendar();
+            }
+        });
+    }
+
+    private void loadSubscriptions() {
+        Request add = new Request(user, null);
+        databaseHandler.getSubscriptions(add, result -> {
+            if (result.isSuccessful()) {
+                result.getResult().forEach(sub -> {
+                    Log.d(TAG, String.format("LOADING -> %s - %s", sub.getTitle(), sub.getCost()));
+                    subscriptions.add(sub);
+                });
                 refreshCalendar();
             }
         });
