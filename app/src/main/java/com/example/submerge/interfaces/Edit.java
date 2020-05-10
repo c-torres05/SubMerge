@@ -28,7 +28,8 @@ import java.util.Objects;
 
 public class Edit extends AppCompatActivity {
     static NotificationHandler notificationHandler;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "SubMerge";
+    static DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
     String edit_type;
     Subscription subscription;
@@ -40,8 +41,10 @@ public class Edit extends AppCompatActivity {
     EditText sub_cost;
     Button saveButton;
 
+
     ArrayList<RecurrenceItem> mRecurrList;
     RecurrenceAdapter recurrenceAdapter;
+    Spinner spinner;
     DatePickerDialog datePickerDialog;
 
     @Override
@@ -53,7 +56,7 @@ public class Edit extends AppCompatActivity {
         sub_name = (EditText) findViewById(R.id.sub_input);
         sub_cost = (EditText) findViewById(R.id.cost_input);
         displayDate = (TextView) findViewById(R.id.select_date);
-        Spinner spinner = findViewById( R.id.recur_spinner);
+        spinner = findViewById( R.id.recur_spinner);
         saveButton = findViewById(R.id.save_button);
 
         initList();
@@ -68,7 +71,8 @@ public class Edit extends AppCompatActivity {
 
         saveButton.setOnClickListener(v -> {
             String title = sub_name.getText().toString();
-            String recurrence = mRecurrList.get(0).getRecurrence();
+            RecurrenceItem item = (RecurrenceItem) spinner.getSelectedItem();
+            String recurrence = item.getRecurrence();
             String renewal = displayDate.getText().toString();
             String cost = sub_cost.getText().toString();
             subscription = new Subscription(subscription.getImage(), title, subscription.accessTrial(),
@@ -82,8 +86,7 @@ public class Edit extends AppCompatActivity {
         this.sub_name.setText(subscription.getTitle());
         this.displayDate.setText(subscription.getRenewal());
         Calendar c = Calendar.getInstance();
-        c.setTime(new Date(subscription.accessRenewal()));
-        datePickerDialog.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH) - 1, c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
 
         int index = 0;
         for (RecurrenceItem recurrence: mRecurrList) {

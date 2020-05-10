@@ -1,88 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".interfaces.MainInterface" >
-
-    <TextView
-        android:id="@+id/current_month"
-        android:textSize="40dp"
-        android:textAlignment="center"
-        android:textColor="@color/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="45dp"/>
+    android:background="@drawable/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".interfaces.MainInterface">
 
     <Button
         android:id="@+id/add_item"
-        android:text="+"
-        android:textSize="35dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/text"
-        android:textAlignment="center"
+        android:background="@drawable/add_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_height="50dp"
-        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
-        android:elevation="2dp" />
-
-<!--    <Button-->
-<!--        android:id="@+id/test_notification"-->
-<!--        android:text="~"-->
-<!--        android:textSize="35dp"-->
-<!--        android:background="@color/colorPrimary"-->
-<!--        android:textColor="@color/text"-->
-<!--        android:textAlignment="center"-->
-<!--        android:layout_toStartOf="@+id/add_item"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_marginTop="5dp"-->
-<!--        android:layout_marginRight="5dp"-->
-<!--        android:elevation="2dp" />-->
+        android:elevation="5dp"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:text="Cost this month"/>
 
     <TextView
         android:id="@+id/current_cost"
-        android:textSize="50dp"
+        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="@color/text"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/current_month"
-        android:layout_marginTop="35dp"/>
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_below="@id/current_cost"
-        android:layout_marginTop="35dp"
-        android:background="@color/colorPrimary" />
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_above="@id/txt_user_id"
-        android:background="@color/colorPrimary" />
-    <TextView
-        android:id="@+id/txt_user_id"
-        android:textColor="@color/colorAccent"
+        android:layout_below="@id/title"
+        android:text="$35.99"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+    <com.example.submerge.calendar.CalendarView
+        android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
+        android:layout_below="@+id/current_cost"
+        app:headerColor="#252425"
+        app:headerLabelColor="#FFFFFF"
+        app:eventsEnabled="true"
+        app:todayLabelColor="@color/colorPrimaryDark"
+        app:anotherMonthsDaysLabelsColor="#888787"
+        app:abbreviationsBarColor="#FFFFFF"
+        app:abbreviationsLabelsColor="#000000"
+        app:daysLabelsColor="@color/black"
+        app:pagesColor="#FFFFFF"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/divider"
-        android:layout_above="@+id/divider2"
+        android:layout_below="@id/calendar"
         android:padding="4dp"
-        android:background="@android:color/darker_gray"
         android:scrollbars="vertical" />
 </RelativeLayout>

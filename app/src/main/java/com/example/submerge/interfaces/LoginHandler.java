@@ -18,6 +18,7 @@ import com.example.submerge.models.requests.Request;
 
 import org.bson.types.ObjectId;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class LoginHandler extends AppCompatActivity {
@@ -39,8 +40,8 @@ public class LoginHandler extends AppCompatActivity {
         if (!logging_in) {
             logging_in = true;
 
-            handler = new DatabaseHandler();
-            MainInterface.setDatabaseHandler(handler);
+            handler = DatabaseHandler.getInstance();
+//            MainInterface.setDatabaseHandler(handler);
 
             switch (type) {
                 case "anon":
@@ -79,6 +80,15 @@ public class LoginHandler extends AppCompatActivity {
         handler.finishInit();
         addUser(result -> {
             if (result.isSuccessful()) {
+//                Calendar cal = Calendar.getInstance();
+//                Request add = new Request(result.getResult(), new Subscription("netflix", "Netflix - Basic", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
+//                Request add1 = new Request(result.getResult(), new Subscription("netflix", "Netflix - Basic", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 12.99, 0.00));
+//                Request add2 = new Request(result.getResult(), new Subscription("netflix", "Netflix - Basic", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 15.99, 0.00));
+//                Request add3 = new Request(result.getResult(), new Subscription("hulu", "Hulu", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
+//                handler.insertSearchSubscription(add, r -> {});
+//                handler.insertSearchSubscription(add1, r -> {});
+//                handler.insertSearchSubscription(add2, r -> {});
+//                handler.insertSearchSubscription(add3, r -> {});
                 User.encode_intent(main, result.getResult());
                 main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 main.putExtra("from", "login");

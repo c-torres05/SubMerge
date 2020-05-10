@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SearchInterface extends AppCompatActivity {
 
-    static DatabaseHandler databaseHandler;
+    static DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
     static NotificationHandler notificationHandler;
     static User user;
     RecyclerView recyclerView;
@@ -47,6 +47,7 @@ public class SearchInterface extends AppCompatActivity {
 
         databaseHandler.getSearchSubscriptions(result -> {
             for (Subscription sub : result.getResult()) {
+                sub.setImageDrawable(getResources().getIdentifier(sub.getImage().toLowerCase(), "drawable", this.getPackageName()));
                 searchAdapter.addItem(sub);
             }
         });
@@ -114,11 +115,11 @@ public class SearchInterface extends AppCompatActivity {
         finish();
     }
 
-    public static void setDatabaseHandler(DatabaseHandler new_handler) {
-        databaseHandler = new_handler;
-    }
-
-    public static void setNotificationHandler(NotificationHandler new_handler) {
-        notificationHandler = new_handler;
-    }
+//    public static void setDatabaseHandler(DatabaseHandler new_handler) {
+//        databaseHandler = new_handler;
+//    }
+//
+//    public static void setNotificationHandler(NotificationHandler new_handler) {
+//        notificationHandler = new_handler;
+//    }
 }

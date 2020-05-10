@@ -33,6 +33,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class DatabaseHandler {
     private static final String TAG = "SubMerge";
+    private static volatile DatabaseHandler instance = new DatabaseHandler();
 
     private StitchAppClient client;
     private String userId;
@@ -69,6 +70,10 @@ public class DatabaseHandler {
 
     public DatabaseHandler() {
         this.client = Stitch.getDefaultAppClient();
+    }
+
+    public static DatabaseHandler getInstance() {
+        return instance;
     }
 
     public String getUserId() {
@@ -264,8 +269,7 @@ public class DatabaseHandler {
                 Log.i(TAG, String.format("successfully found %d subscriptions", subscriptions.size()));
 
                 Calendar cal = Calendar.getInstance();
-                subscriptions.add(new Subscription(R.drawable.custom, "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
-
+                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
                 return_data.onComplete(new Result<>(subscriptions, "", true));
             } else {
                 Log.e("app", "failed to find names with: ", result.getException());

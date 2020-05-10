@@ -25,12 +25,38 @@
     <Button
         android:id="@+id/anon_login_button"
         android:textColor="@color/text"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/gradient3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="105dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="@string/login_button_text"
+        android:text="@string/anon_login_button_text"
         android:elevation="2dp"/>
+
+    <Button
+        android:id="@+id/user_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/anon_login_button"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/gradient3"
+        android:elevation="2dp"
+        android:text="@string/user_login_button_text"
+        android:textColor="@color/text" />
+
+    <Button
+        android:id="@+id/google_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/user_login_button"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/gradient3"
+        android:elevation="2dp"
+        android:text="@string/google_login_button_text"
+        android:textColor="@color/text" />
 </RelativeLayout>
