@@ -55,7 +55,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         //holder.textView.setText(subsList.get(position));
         Subscription currentSubscription = subsList.get(position);
 
-        holder.imageView.setImageResource(currentSubscription.getImage());
+        holder.imageView.setImageResource(currentSubscription.getImageDrawable());
         //holder.change_image.setImageResource(currentSubscription.getChangeImage());
         holder.textView.setText(currentSubscription.getTitle());
 //        holder.message.setText(currentSubscription.getMessage());
@@ -87,7 +87,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 filteredList.addAll(subsListAll);
             } else {
                 for (Subscription subscription: subsListAll) {
-                    if (subscription.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                    if (subscription.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase()) || subscription.getTitle().equals("Custom")) {
                         filteredList.add(subscription);
                     }
                 }

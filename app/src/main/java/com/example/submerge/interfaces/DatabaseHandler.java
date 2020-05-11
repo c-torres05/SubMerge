@@ -1,5 +1,6 @@
 package com.example.submerge.interfaces;
 
+import android.telecom.Call;
 import android.util.Log;
 
 import com.example.submerge.App;
@@ -12,11 +13,17 @@ import com.example.submerge.models.SubscriptionDBObject;
 import com.example.submerge.models.SubscriptionPackager;
 import com.example.submerge.models.User;
 import com.example.submerge.models.requests.Request;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.mongodb.lang.NonNull;
 import com.mongodb.stitch.android.core.Stitch;
 import com.mongodb.stitch.android.core.StitchAppClient;
+import com.mongodb.stitch.android.core.auth.StitchUser;
+import com.mongodb.stitch.android.core.auth.providers.userpassword.UserPasswordAuthProviderClient;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection;
+import com.mongodb.stitch.core.StitchServiceException;
+import com.mongodb.stitch.core.auth.providers.userpassword.UserPasswordCredential;
 import com.mongodb.stitch.core.internal.common.BsonUtils;
 import com.mongodb.stitch.core.services.mongodb.remote.RemoteInsertOneResult;
 import com.mongodb.stitch.core.services.mongodb.remote.RemoteUpdateResult;
@@ -33,6 +40,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class DatabaseHandler {
     private static final String TAG = "SubMerge";
+    private static volatile DatabaseHandler instance = new DatabaseHandler();
 
     private StitchAppClient client;
     private String userId;
@@ -71,6 +79,12 @@ public class DatabaseHandler {
         this.client = Stitch.getDefaultAppClient();
     }
 
+    private static void resetInstance() {instance = new DatabaseHandler();}
+
+    public static DatabaseHandler getInstance() {
+        return instance;
+    }
+
     public String getUserId() {
         return this.userId;
     }
@@ -106,6 +120,7 @@ public class DatabaseHandler {
 
     public void log_out(Callback<String, String> callback) {
         this.client.getAuth().logout().addOnCompleteListener(task -> callback.onComplete(new Result<String, String>("Logged out the User!", "Failed to log out the user!", task.isSuccessful())));
+        resetInstance();
     }
 
 
@@ -129,6 +144,42 @@ public class DatabaseHandler {
                         callback.onComplete(new Result<>(null, "Login failed!", false));
                     }
                 });
+    }
+
+    public void loginEmail(Callback<Boolean, String> callback, String username, String password) {
+        Log.d("stitch", "logging in with username / password");
+
+        Log.i(TAG, String.format("Made a user %s", username));
+        this.name = username;
+
+        UserPasswordCredential credential = new UserPasswordCredential(username, password);
+        Stitch.getDefaultAppClient().getAuth().loginWithCredential(credential).addOnCompleteListener(tryLogin -> {
+            if (tryLogin.isSuccessful()) {
+                Log.d("stitch", "Successfully logged in as user " + tryLogin.getResult().getId());
+                userId = client.getAuth().getUser().getId();
+                callback.onComplete(new Result<>(false, "Failed!", true));
+            } else {
+                UserPasswordAuthProviderClient emailPassClient = Stitch.getDefaultAppClient().getAuth().getProviderClient(
+                        UserPasswordAuthProviderClient.factory
+                );
+                emailPassClient.registerWithEmail(username, password).addOnCompleteListener(tryCreate -> {
+                    if (tryCreate.isSuccessful()) {
+                        Log.d("stitch", "Successfully made account!");
+                        Stitch.getDefaultAppClient().getAuth().loginWithCredential(credential).addOnCompleteListener(finishLogin -> {
+                            if (finishLogin.isSuccessful()) {
+                                Log.d("stitch", "Successfully logged in as user " + finishLogin.getResult().getId());
+                                userId = client.getAuth().getUser().getId();
+                                callback.onComplete(new Result<>(true, "Failed!", true));
+                            } else {
+                                Log.e("stitch", "Error logging in with email/password auth:", finishLogin.getException());
+                            }
+                        });
+                    } else {
+                        callback.onComplete(new Result<>(false, "Password must be between 6 & 128 chartacters!", false));
+                    }
+                });
+            }
+        });
     }
 
     public void addUser(Request add_request, Callback<User, String> result) {
@@ -158,6 +209,25 @@ public class DatabaseHandler {
                 }
             } else {
                 Log.e(TAG, "Could not add user", new Exception("Find Request Failed!"));
+                result.onComplete(new Result<>(null, "Find Request Failed!", false));
+            }
+        });
+    }
+
+    public void findUser(Request add, Callback<User, String> result) {
+        Task<User> find_user_task = this.users.findOne(eq("user_id", add.getUser().getUser_Id()));
+
+        find_user_task.addOnCompleteListener(find_user_task_result -> {
+            if (find_user_task_result.isSuccessful()) {
+                if (find_user_task_result.getResult() == null) {
+                    Log.e(TAG, "Could not find user", new Exception("No user!"));
+                    result.onComplete(new Result<>(null, "No user!", false));
+                } else {
+                    Log.d(TAG, "Found User!");
+                    result.onComplete(new Result<>(find_user_task_result.getResult(), "", true));
+                }
+            } else {
+                Log.e(TAG, "Could not find user", new Exception("Find Request Failed!"));
                 result.onComplete(new Result<>(null, "Find Request Failed!", false));
             }
         });
@@ -242,6 +312,19 @@ public class DatabaseHandler {
         update_task.addOnCompleteListener(update_task_result -> result.onComplete(new Result<>(true, "Update Request Failed!", update_task_result.isSuccessful())));
     }
 
+    public void getSubscriptions(Request add_request, Callback<List<Subscription>, String> result) {
+        if (add_request.getUser() == null) {
+            Log.e(TAG, "Must have a user to be able to get subscriptions!");
+            result.onComplete(new Result<>(null, "Invalid parameters", false));
+        }
+
+        getSubscriptionList(add_request, subscription_result -> {
+            Log.d(TAG, "Got the user subscriptions!");
+            SubscriptionDBObject DBObj = subscription_result.getResult();
+            result.onComplete(new Result<>(DBObj.getSubscriptions(), "", true));
+        });
+    }
+
     public void insertSearchSubscription(Request add_request, Callback<Subscription, String> result) {
         //To only be used in "non-production" for testing or for ease of use.
         Task<RemoteInsertOneResult> insert_task = this.supported_subscriptions.insertOne(add_request.getSubscription());
@@ -264,8 +347,10 @@ public class DatabaseHandler {
                 Log.i(TAG, String.format("successfully found %d subscriptions", subscriptions.size()));
 
                 Calendar cal = Calendar.getInstance();
-                subscriptions.add(new Subscription(R.drawable.custom, "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
-
+                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, ""));
+                for (Subscription sub : subscriptions) {
+                    sub.setRenewal(cal.getTime());
+                }
                 return_data.onComplete(new Result<>(subscriptions, "", true));
             } else {
                 Log.e("app", "failed to find names with: ", result.getException());

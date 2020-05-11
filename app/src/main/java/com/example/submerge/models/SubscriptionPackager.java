@@ -25,6 +25,7 @@ public class SubscriptionPackager {
         static final String RENEWAL = "renewal";
         static final String RECURRANCE = "recurrance";
         static final String IMAGE = "image";
+        static final String URL = "url";
     }
 
     public static BsonDocument toBsonDocument(final Subscription item) {
@@ -37,7 +38,8 @@ public class SubscriptionPackager {
         asDoc.put(Fields.TRIAL, new BsonBoolean(item.accessTrial()));
         asDoc.put(Fields.RENEWAL, new BsonDateTime(item.accessRenewal()));
         asDoc.put(Fields.RECURRANCE, new BsonInt32(item.accessRecurrance()));
-        asDoc.put(Fields.IMAGE, new BsonInt32(item.accessImage()));
+        asDoc.put(Fields.IMAGE, new BsonString(item.accessImage()));
+        asDoc.put(Fields.URL, new BsonString(item.accessURL()));
         return asDoc;
     }
 
@@ -45,13 +47,14 @@ public class SubscriptionPackager {
         return new Subscription(
                 doc.getObjectId(Fields.ID).getValue(),
                 doc.getString(Fields.OWNER_ID).getValue(),
-                doc.getInt32(Fields.IMAGE).getValue(),
+                doc.getString(Fields.IMAGE).getValue(),
                 doc.getString(Fields.TITLE).getValue(),
                 doc.getBoolean(Fields.TRIAL).getValue(),
                 doc.getDateTime(Fields.RENEWAL).getValue(),
                 doc.getInt32(Fields.RECURRANCE).getValue(),
                 doc.getDouble(Fields.COST).getValue(),
-                doc.getDouble(Fields.CHANGE).getValue()
+                doc.getDouble(Fields.CHANGE).getValue(),
+                doc.getString(Fields.URL).getValue()
         );
     }
 

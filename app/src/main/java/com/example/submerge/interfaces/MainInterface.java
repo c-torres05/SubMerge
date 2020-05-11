@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.submerge.R;
+import com.example.submerge.calendar.CalendarView;
+import com.example.submerge.calendar.EventDay;
+import com.example.submerge.calendar.listeners.OnCalendarPageChangeListener;
 import com.example.submerge.models.Subscription;
 import com.example.submerge.models.User;
 import com.example.submerge.models.requests.Request;
@@ -34,16 +37,16 @@ public class MainInterface extends AppCompatActivity {
     private static final String TAG = "SubMerge";
 
     MainAdapter adapter;
-    static DatabaseHandler databaseHandler;
+    static DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
     static NotificationHandler notificationHandler;
     User user;
 
     RecyclerView recyclerView;
     Button add_button;
-    Button notification_button;
-    TextView current_month;
+    List<EventDay> events;
+    List<Subscription> subscriptions;
     TextView total_cost;
-    TextView login;
+    CalendarView calendar;
 
     double cost;
 
@@ -53,16 +56,16 @@ public class MainInterface extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main); //Set the view of this interface here
 
+        this.calendar = findViewById(R.id.calendar);
+        this.events = new ArrayList<>();
+        this.subscriptions = new ArrayList<>();
+
         this.add_button = findViewById(R.id.add_item);
-//        this.notification_button = findViewById(R.id.test_notification);
         this.recyclerView = findViewById(R.id.list_items);
-        this.current_month = findViewById(R.id.current_month);
         this.total_cost = findViewById(R.id.current_cost);
-        this.login = findViewById(R.id.txt_user_id);
 
         makeListeners();
         setDefaults();
-
         decodeIntent(getIntent());
     }
 
@@ -70,13 +73,15 @@ public class MainInterface extends AppCompatActivity {
     public void makeListeners() {
         add_button.setOnClickListener(this::goToSearchPage);
 
-//        notification_button.setOnClickListener(this::sendNotification);
-
         notificationHandler = new NotificationHandler();
         notificationHandler.mNotificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
         notificationHandler.notificationCompatBuilder = new NotificationCompat.Builder( getApplicationContext(), NotificationHandler.CHANNEL_ID);
 
         RecyclerItemClickListener.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> gotoDetail(v, position));
+
+        OnCalendarPageChangeListener updateList = this::refreshCalendar;
+        calendar.setOnForwardPageChangeListener(updateList);
+        calendar.setOnPreviousPageChangeListener(updateList);
 
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
@@ -92,13 +97,13 @@ public class MainInterface extends AppCompatActivity {
     }
 
     public void setDefaults() {
-        this.login.setText(String.format(Locale.ENGLISH, "Logged in with ID: %s", databaseHandler.getName()));
+//        this.login.setText(String.format(Locale.ENGLISH, "Logged in with ID: %s", databaseHandler.getName()));
 
         List<Subscription> items = new ArrayList<>();
 
-        Calendar cal = Calendar.getInstance();
-        String month = Subscription.MONTHS[cal.get(Calendar.MONTH)];
-        this.current_month.setText(month);
+//        Calendar cal = Calendar.getInstance();
+//        String month = Subscription.MONTHS[cal.get(Calendar.MONTH)];
+//        this.current_month.setText(month);
 
         this.adapter = new MainAdapter(items);
         this.recyclerView.setAdapter(this.adapter);
@@ -110,14 +115,21 @@ public class MainInterface extends AppCompatActivity {
         }
 
         this.total_cost.setText(String.format(Locale.ENGLISH, "$%.2f", this.cost));
+//        this.calendar.setDisabledDays(new Ar);
+//        this.calendar.setNavigationVisibility(0);
     }
 
     public void decodeIntent(Intent intent) {
         switch (Objects.requireNonNull(intent.getStringExtra("from"))) {
-            case "login":
+            case "login-anon":
                 user = User.decode_intent(intent);
                 break;
+            case "login-user":
+                user = User.decode_intent(intent);
+                loadSubscriptions();
+                break;
             case "edit-add":
+                Log.i("SubMerge", "Come back from search");
                 Subscription sub = Subscription.decode_intent(intent);
                 user = User.decode_intent(intent);
                 addItem(sub);
@@ -129,16 +141,13 @@ public class MainInterface extends AppCompatActivity {
 
     public void goBackToLogin() {
         Intent login = new Intent(this, LoginHandler.class);
-        login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(login);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void goToSearchPage(View v) {
         Log.i("SubMerge-Info", "Going to Search Page");
-
-        SearchInterface.setDatabaseHandler(databaseHandler);
-        //SearchInterface.setNotificationHandler(notificationHandler);
 
         Intent search = new Intent(this, SearchInterface.class);
         User.encode_intent(search, user);
@@ -149,14 +158,12 @@ public class MainInterface extends AppCompatActivity {
     public void gotoDetail(View v, int position) {
         Log.i("SubMerge-Info", "Going to Detail Page");
 
-//        DetailInterface.setDatabaseHandler(databaseHandler);
-//        DetailInterface.setNotificationHandler(notificationHandler);
-//
-//        Intent detail = new Intent(this, DetailInterface.class);
-//        User.encode_intent(detail, user);
-//        Subscription.encode_intent(detail, adapter.getList().get(position));
-//
-//        startActivityForResult(detail, 1);
+        Intent detail = new Intent(this, Unsubscribe.class);
+        User.encode_intent(detail, user);
+        detail.putExtra("from", "main");
+        Subscription.encode_intent(detail, adapter.getList().get(position));
+
+        startActivityForResult(detail, 1);
     }
 
     @Override
@@ -173,35 +180,80 @@ public class MainInterface extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void sendNotification(View v) {
-        Log.i("SubMerge-Info", "Sending a notification!");
-        Calendar c = Calendar.getInstance();
-        c.setTime(new Date());
-        c.add(Calendar.SECOND, 1);
-        Subscription sub = new Subscription(R.drawable.spotify, "Spotify - Student", false, c.getTime(), Subscription.Recurrences.MONTHLY, 4.99, 0.00);
-        notificationHandler.sendNotification(sub);
-    }
-
-    public static void setDatabaseHandler(DatabaseHandler new_handler) {
-        databaseHandler = new_handler;
-    }
-
     public void addItem(Subscription sub) {
         Request add = new Request(user, sub);
         databaseHandler.addSubscription(add, result -> {
             if (result.isSuccessful()) {
                 Log.i(TAG, String.format("Added -> %s - %s", sub.getTitle(), sub.getCost()));
-                adapter.addItem(sub);
-                cost += sub.accessCost();
-                total_cost.setText(String.format(Locale.ENGLISH, "$%.2f", cost));
+                subscriptions.add(sub);
+                refreshCalendar();
             }
         });
     }
 
+    private void loadSubscriptions() {
+        Request add = new Request(user, null);
+        databaseHandler.getSubscriptions(add, result -> {
+            if (result.isSuccessful()) {
+                result.getResult().forEach(sub -> {
+                    Log.d(TAG, String.format("LOADING -> %s - %s", sub.getTitle(), sub.getCost()));
+                    subscriptions.add(sub);
+                });
+                refreshCalendar();
+            }
+        });
+    }
+
+    public void refreshCalendar() {
+        Log.i("SubMerge", "Refresh the calendar");
+        List<Subscription> subs = new ArrayList<>();
+        List<EventDay> events = new ArrayList<>();
+        adapter.clear_list();
+        Calendar page = this.calendar.getCurrentPageDate();
+        Calendar first_showed_day = this.calendar.getFirstShowingDate();
+        Calendar last_showed_day = (Calendar) first_showed_day.clone();
+        last_showed_day.add(Calendar.DAY_OF_YEAR, 42);
+
+        this.cost = 0;
+        for (Subscription sub : subscriptions) {
+            Calendar c = Calendar.getInstance();
+            Date sub_date = new Date(sub.accessRenewal());
+            c.setTime(sub_date);
+            Log.i("SubMerge", sub.getTitle());
+
+            //If before current day → Paid & Renewed
+            //If after current day → Renews
+            //Message will always be from current day.
+            //Calendar will show the day of the next month that it will renew
+
+            Log.d("Submerge", String.format("Sub recurrence is: %d", sub.accessRecurrance()));
+            sub.setImageDrawable(getResources().getIdentifier(sub.getImage().toLowerCase(), "drawable", this.getPackageName()));
+            while (c.before(first_showed_day)) {
+                c.add(Calendar.DAY_OF_YEAR, sub.accessRecurrance());
+            }
+
+            if (c.before(last_showed_day)) {
+                subs.add(sub);
+
+                while (c.before(last_showed_day)) {
+                    Log.d("SubMerge", String.format("In Month: %d", c.get(Calendar.MONTH)));
+                    events.add(new EventDay((Calendar) c.clone(), getResources().getIdentifier(sub.getImage().toLowerCase(), "drawable", this.getPackageName())));
+                    if (c.get(Calendar.MONTH) == page.get(Calendar.MONTH))
+                        this.cost += sub.accessCost();
+                    c.add(Calendar.DAY_OF_YEAR, sub.accessRecurrance());
+                }
+            }
+        }
+
+        adapter.set_list(subs);
+        Log.i("SubMerge", String.format("The string is %d elements long", events.size()));
+        total_cost.setText(String.format(Locale.ENGLISH, "$%.2f", cost));
+        calendar.setEvents(events);
+        adapter.notifyDataSetChanged();
+    }
+
     public void removeItem(Subscription sub) {
         adapter.removeItem(sub);
-
         this.cost -= sub.accessCost();
         this.total_cost.setText(String.format(Locale.ENGLISH, "$%.2f", cost));
     }
