@@ -17,27 +17,30 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:elevation="5dp"/>
+
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/coolvetica_rg"
+        android:text="Cost This Month"
         android:textAlignment="center"
         android:textColor="@color/text"
-        android:layout_marginTop="10dp"
-        android:text="Cost this month"/>
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/current_cost"
-        android:textSize="30sp"
-        android:textAlignment="center"
-        android:textColor="@color/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:text="$35.99"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="$35.99"
+        android:textAlignment="center"
+        android:textColor="@color/text"
+        android:textSize="40sp" />
     <com.example.submerge.calendar.CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"

@@ -8,11 +8,12 @@
         android:layout_width="240dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
+        android:fontFamily="@font/coolvetica_condensed"
         android:gravity="center"
         android:text="@string/select"
         android:textAlignment="center"
         android:textColor="@color/text"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:theme="@style/ThemeOverlay.AppCompat.Light" />
 
 </RelativeLayout>
