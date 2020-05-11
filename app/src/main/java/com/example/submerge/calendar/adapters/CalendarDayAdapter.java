@@ -24,6 +24,7 @@ import com.example.submerge.calendar.utils.DayColorsUtils;
 import com.example.submerge.calendar.utils.EventDayUtils;
 import com.example.submerge.calendar.utils.ImageUtils;
 import com.example.submerge.calendar.utils.SelectedDay;
+import com.example.submerge.models.Subscription;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -140,7 +141,7 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
 
         List<EventDay> days = mCalendarProperties.getEventDays();
         eventGrid.removeAllViews();
-        days.forEach(eventDay -> {
+        for (EventDay eventDay : days) {
             if (eventDay.getCalendar().get(Calendar.DAY_OF_YEAR) == day.get(Calendar.DAY_OF_YEAR)) {
                 ImageView new_event = new ImageView(getContext());
                 Log.i("SubMerge", "Add new image view");
@@ -151,6 +152,6 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
                 }
                 eventGrid.addView(new_event, 30, 30);
             }
-        });
+        }
     }
 }

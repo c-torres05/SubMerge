@@ -208,6 +208,7 @@ public class Subscription {
         return recurrenceFromInt(this.recurrance);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public String getMessage() {
         String message = "";
         if (this.trial)
@@ -216,7 +217,7 @@ public class Subscription {
             message += "Renews ";
 
 
-        LocalDate current = LocalDate.now();
+        LocalDate current =  LocalDate.now();
         LocalDate date = this.renewal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         long days_until;
         while (date.isBefore(current)) {
