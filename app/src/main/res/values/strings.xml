@@ -47,11 +47,13 @@
     <string name="recurrence">Recurrence Of Payment:</string>
     <string name="cost">Cost:</string>
     <string name="example">Ex: Netflix</string>
-    <string name="payment_ex">MM/DD/YYY</string>
+    <string name="url">Subscription URL</string>
+    <string name="payment_ex">MM/DD/YYYY</string>
     <string name="recur_ex">Weekly/Bi-Weekly/Monthly/Yearly</string>
-    <string name="select">-SELECT-</string>
     <string name="cost_ex">Ex: $12.99</string>
-    <string name="button">SAVE</string>
+    <string name="url_ex">www.netflix.com</string>
+    <string name="select">-SELECT-</string>
+    <string name="button">SAVE SUBSCRIPTION</string>
 
 
 

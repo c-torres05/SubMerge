@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/text"
         android:layout_marginTop="10dp"
         android:text="Cost this month"/>
 
@@ -31,7 +31,7 @@
         android:id="@+id/current_cost"
         android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
@@ -50,7 +50,7 @@
         app:anotherMonthsDaysLabelsColor="#888787"
         app:abbreviationsBarColor="#FFFFFF"
         app:abbreviationsLabelsColor="#000000"
-        app:daysLabelsColor="@color/black"
+        app:daysLabelsColor="@color/text"
         app:pagesColor="#FFFFFF"
         />
 

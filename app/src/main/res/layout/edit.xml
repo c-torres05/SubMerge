@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="300dp"
-        android:layout_height="500dp"
+        android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -18,17 +18,20 @@
         <!--Subscription Name-->
         <TextView
             android:id="@+id/sub_name"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/name"
-            android:textColor="@color/black"
+            android:textColor="@color/text"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/sub_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape"
             android:gravity="center"
             android:hint="@string/example"
             android:importantForAutofill="no"
@@ -42,20 +45,23 @@
         <!--Renewal Date-->
         <TextView
             android:id="@+id/renewal_date"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/payment"
-            android:textColor="@color/black"
+            android:textColor="@color/text"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/select_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape"
             android:gravity="center"
             android:text="@string/payment_ex"
-            android:textColor="@color/grey"
+            android:textColor="@color/text"
             android:textSize="20sp" />
 
         <Space
@@ -65,18 +71,20 @@
         <!--Payment Recurrence-->
         <TextView
             android:id="@+id/payment_recurrence"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/recurrence"
-            android:textColor="@color/black"
+            android:textColor="@color/text"
             android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/recur_spinner"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
+            android:background="@drawable/shape"
             android:text="@string/select"
             android:textAlignment="center" />
 
@@ -85,20 +93,22 @@
             android:layout_height="30dp" />
 
         <!--Cost-->
-
         <TextView
             android:id="@+id/cost_text"
-            android:layout_width="match_parent"
+            android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/cost"
-            android:textColor="@color/black"
+            android:textColor="@color/text"
             android:textSize="20sp" />
 
         <EditText
             android:id="@+id/cost_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape"
             android:gravity="center"
             android:hint="@string/cost_ex"
             android:importantForAutofill="no"
@@ -109,11 +119,39 @@
             android:layout_width="match_parent"
             android:layout_height="30dp" />
 
+        <!--Cost-->
+        <TextView
+            android:id="@+id/url_text"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/url"
+            android:textColor="@color/text"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/url_input"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:hint="@string/url_ex"
+            android:importantForAutofill="no"
+            android:textSize="20sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
         <Button
             android:id="@+id/save_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button" />
-
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/fade"
+            android:text="@string/button"
+            android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>

@@ -5,8 +5,7 @@
     <color name="colorPrimaryDark">#00BDA0</color>
     <color name="colorAccent">#23837C</color>
     <color name="text">#000000</color>
-    <color name="black">#000000</color>
-    <color name="grey">#A9A9A9</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="daysLabelColor">#8A000000</color>
     <color name="currentMonthDayColor">#de000000</color>
