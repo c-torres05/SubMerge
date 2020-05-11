@@ -347,7 +347,10 @@ public class DatabaseHandler {
                 Log.i(TAG, String.format("successfully found %d subscriptions", subscriptions.size()));
 
                 Calendar cal = Calendar.getInstance();
-                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
+                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, ""));
+                for (Subscription sub : subscriptions) {
+                    sub.setRenewal(cal.getTime());
+                }
                 return_data.onComplete(new Result<>(subscriptions, "", true));
             } else {
                 Log.e("app", "failed to find names with: ", result.getException());

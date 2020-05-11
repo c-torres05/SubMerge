@@ -1,5 +1,6 @@
 package com.example.submerge.interfaces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -15,9 +16,11 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
-        String url = "https://www.netflix.com";
+        WebView web =  findViewById(R.id.webView);
 
-        WebView web = (WebView) findViewById(R.id.webView);
+        Intent from_intent = getIntent();
+        String url = from_intent.getStringExtra("from");
+
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
 

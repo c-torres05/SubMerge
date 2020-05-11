@@ -84,7 +84,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         Subscription currentSubscription = list.get(position);
 
         holder.image.setImageResource(currentSubscription.getImageDrawable());
-        if (currentSubscription.getTitle().length() > 15) {
+        if (currentSubscription.getTitle().length() > 20) {
             holder.title.setText(currentSubscription.getTitle().substring(0, 14));
         } else {
             holder.title.setText(currentSubscription.getTitle());

@@ -42,7 +42,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="40dp" />
 
         <!--Renewal Date-->
         <TextView
@@ -70,7 +70,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="40dp" />
 
         <!--Payment Recurrence-->
         <TextView
@@ -95,7 +95,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="40dp" />
 
         <!--Cost-->
         <TextView
@@ -124,7 +124,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="40dp" />
 
         <!--Cost-->
         <TextView
@@ -152,7 +152,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="50dp" />
 
         <Button
             android:id="@+id/save_button"

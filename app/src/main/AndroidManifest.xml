@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".interfaces.SearchInterface"/>
         <activity android:name=".interfaces.Edit"/>
+        <activity android:name=".interfaces.Unsubscribe"/>
+        <activity android:name=".interfaces.WebActivity"/>
         <activity android:name=".interfaces.MainInterface"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleTask">
