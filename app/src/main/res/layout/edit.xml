@@ -20,6 +20,11 @@
             android:id="@+id/sub_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
+=======
+            android:layout_gravity="center"
+            android:fontFamily="@font/coolvetica_rg"
+>>>>>>> Stashed changes
             android:gravity="center"
             android:text="@string/name"
             android:textColor="@color/black"
@@ -44,6 +49,11 @@
             android:id="@+id/renewal_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
+=======
+            android:layout_gravity="center"
+            android:fontFamily="@font/coolvetica_rg"
+>>>>>>> Stashed changes
             android:gravity="center"
             android:text="@string/payment"
             android:textColor="@color/black"
@@ -67,6 +77,11 @@
             android:id="@+id/payment_recurrence"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
+=======
+            android:layout_gravity="center"
+            android:fontFamily="@font/coolvetica_rg"
+>>>>>>> Stashed changes
             android:gravity="center"
             android:text="@string/recurrence"
             android:textColor="@color/black"
@@ -90,6 +105,11 @@
             android:id="@+id/cost_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
+=======
+            android:layout_gravity="center"
+            android:fontFamily="@font/coolvetica_rg"
+>>>>>>> Stashed changes
             android:gravity="center"
             android:text="@string/cost"
             android:textColor="@color/black"
@@ -99,6 +119,22 @@
             android:id="@+id/cost_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
+=======
+            android:layout_gravity="center"
+            android:fontFamily="@font/coolvetica_rg"
+            android:gravity="center"
+            android:text="@string/url"
+            android:textColor="@color/text"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/url_input"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape"
+>>>>>>> Stashed changes
             android:gravity="center"
             android:hint="@string/cost_ex"
             android:importantForAutofill="no"
@@ -111,9 +147,20 @@
 
         <Button
             android:id="@+id/save_button"
+<<<<<<< Updated upstream
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button" />
 
+=======
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/fade"
+            android:fontFamily="@font/coolvetica_condensed"
+            android:text="@string/button"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+>>>>>>> Stashed changes
     </LinearLayout>
 </RelativeLayout>

@@ -30,6 +30,7 @@
         android:layout_width="50dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
+<<<<<<< Updated upstream
         android:elevation="2dp" />
 
 <!--    <Button-->
@@ -72,6 +73,35 @@
     <TextView
         android:id="@+id/txt_user_id"
         android:textColor="@color/colorAccent"
+=======
+        android:elevation="5dp"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/coolvetica_rg"
+        android:text="Cost This Month"
+        android:textAlignment="center"
+        android:textColor="@color/text"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/current_cost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="$35.99"
+        android:textAlignment="center"
+        android:textColor="@color/text"
+        android:textSize="35sp" />
+    <com.example.submerge.calendar.CalendarView
+        android:id="@+id/calendar"
+>>>>>>> Stashed changes
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"/>

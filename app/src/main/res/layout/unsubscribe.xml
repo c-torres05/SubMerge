@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".interfaces.Unsubscribe">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginTop="590dp"
+        android:layout_marginEnd="98dp"
+        android:layout_marginRight="27dp"
+        android:background="#F60303"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:gravity="center_vertical|center"
+        android:onClick="loadWebPage"
+        android:text="Unsubscribe"
+        android:textAlignment="center"
+        android:textColor="#FAF8F8"
+        android:textSize="30sp"
+        tools:layout_editor_absoluteX="277dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="143dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="262dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/coolvetica_rg"
+        android:gravity="center_horizontal"
+        android:text="Netflix"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="36sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="320dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="Cost: "
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="151dp"
+        android:layout_marginEnd="303dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="$14.99"
+        android:textColor="#000000"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="198dp"
+        android:layout_marginEnd="303dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="Payment: "
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="83dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="228dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="Monthly"
+        android:textColor="#000000"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="249dp"
+        android:layout_marginEnd="283dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:gravity="center_horizontal"
+        android:text="Renewal Date: "
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textVie76"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="@id/button"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="210dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="06/10/2020"
+        android:textColor="#000000"
+        android:textSize="22sp" />
+
+</RelativeLayout>

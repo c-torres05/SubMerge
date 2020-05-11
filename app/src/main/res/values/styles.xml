@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+<<<<<<< Updated upstream
+=======
+        <item name="android:textColorHint">@color/text</item>
+        <item name="android:fontFamily">@font/font</item>
+>>>>>>> Stashed changes
     </style>
 
 </resources>
