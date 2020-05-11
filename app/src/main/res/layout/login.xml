@@ -7,12 +7,13 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SubMerge"
-        android:textSize="60sp"
-        android:textColor="@color/text"
-        android:textAlignment="center"
         android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/coolvetica_rg"
+        android:text="SubMerge"
+        android:textAlignment="center"
+        android:textColor="@color/text"
+        android:textSize="60sp" />
 
     <ImageView
         android:id="@+id/image"
@@ -27,13 +28,14 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_title_text"
-        android:textSize="35sp"
-        android:textColor="@color/text"
-        android:textAlignment="center"
         android:layout_above="@+id/top"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:layout_centerHorizontal="true"/>
+        android:fontFamily="@font/coolvetica_condensed"
+        android:text="@string/login_title_text"
+        android:textAlignment="center"
+        android:textColor="@color/text"
+        android:textSize="35sp" />
 
     <View
         android:id="@+id/top"
@@ -45,17 +47,19 @@
 
     <Button
         android:id="@+id/anon_login_button"
-        android:textColor="@color/text"
-        android:background="@drawable/gradient3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_above="@+id/anon_end"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:text="@string/anon_login_button_text"
+        android:background="@drawable/gradient3"
         android:elevation="2dp"
-        android:nextFocusForward="@+id/username"/>
+        android:fontFamily="@font/coolvetica_condensed"
+        android:nextFocusForward="@+id/username"
+        android:text="@string/anon_login_button_text"
+        android:textColor="@color/text"
+        android:textSize="25sp" />
 
     <View
         android:id="@+id/anon_end"
@@ -109,14 +113,16 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/gradient3"
         android:elevation="2dp"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:nextFocusForward="@+id/google_login_button"
         android:text="@string/user_login_button_text"
         android:textColor="@color/text"
-        android:nextFocusForward="@+id/google_login_button"/>
+        android:textSize="25sp" />
 
 </RelativeLayout>
