@@ -37,7 +37,7 @@ public class SubscriptionPackager {
         asDoc.put(Fields.TRIAL, new BsonBoolean(item.accessTrial()));
         asDoc.put(Fields.RENEWAL, new BsonDateTime(item.accessRenewal()));
         asDoc.put(Fields.RECURRANCE, new BsonInt32(item.accessRecurrance()));
-        asDoc.put(Fields.IMAGE, new BsonInt32(item.accessImage()));
+        asDoc.put(Fields.IMAGE, new BsonString(item.accessImage()));
         return asDoc;
     }
 
@@ -45,7 +45,7 @@ public class SubscriptionPackager {
         return new Subscription(
                 doc.getObjectId(Fields.ID).getValue(),
                 doc.getString(Fields.OWNER_ID).getValue(),
-                doc.getInt32(Fields.IMAGE).getValue(),
+                doc.getString(Fields.IMAGE).getValue(),
                 doc.getString(Fields.TITLE).getValue(),
                 doc.getBoolean(Fields.TRIAL).getValue(),
                 doc.getDateTime(Fields.RENEWAL).getValue(),

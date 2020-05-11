@@ -14,7 +14,9 @@
     //Login
     <string name="login_title_text">Log In</string>
     <string name="login_title_tsize">35dp</string>
-    <string name="login_button_text">Anonymous</string>
+    <string name="anon_login_button_text">Anonymous</string>
+    <string name="user_login_button_text">Login / Sign up</string>
+    <string name="google_login_button_text">Google</string>
 
     //Notifications
     <string name="inspectLabel">See More</string>
@@ -45,9 +47,51 @@
     <string name="recurrence">Recurrence Of Payment:</string>
     <string name="cost">Cost:</string>
     <string name="example">Ex: Netflix</string>
-    <string name="payment_ex">MM/DD/YYY</string>
+    <string name="url">Subscription URL</string>
+    <string name="payment_ex">MM/DD/YYYY</string>
     <string name="recur_ex">Weekly/Bi-Weekly/Monthly/Yearly</string>
-    <string name="select">-SELECT-</string>
     <string name="cost_ex">Ex: $12.99</string>
-    <string name="button">SAVE</string>
+    <string name="url_ex">www.netflix.com</string>
+    <string name="select">-SELECT-</string>
+    <string name="button">SAVE SUBSCRIPTION</string>
+
+
+
+
+    <string name="material_calendar_monday">M</string>
+    <string name="material_calendar_tuesday">T</string>
+    <string name="material_calendar_wednesday">W</string>
+    <string name="material_calendar_thursday">T</string>
+    <string name="material_calendar_friday">F</string>
+    <string name="material_calendar_saturday">S</string>
+    <string name="material_calendar_sunday">S</string>
+
+    <array name="material_calendar_day_abbreviations_array">
+        <item>@string/material_calendar_sunday</item>
+        <item>@string/material_calendar_monday</item>
+        <item>@string/material_calendar_tuesday</item>
+        <item>@string/material_calendar_wednesday</item>
+        <item>@string/material_calendar_thursday</item>
+        <item>@string/material_calendar_friday</item>
+        <item>@string/material_calendar_saturday</item>
+    </array>
+
+    <array name="material_calendar_months_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </array>
+
+    <string name="material_calendar_today_button">Today</string>
+    <string name="material_calendar_positive_button">OK</string>
+    <string name="material_calendar_negative_button">Cancel</string>
 </resources>

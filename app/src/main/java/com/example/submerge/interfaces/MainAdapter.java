@@ -1,5 +1,6 @@
 package com.example.submerge.interfaces;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.submerge.R;
 import com.example.submerge.models.Subscription;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
@@ -50,6 +53,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         notifyItemInserted(list.size() - 1);
     }
 
+    public void clear_list() {
+        this.list.clear();
+        this.listFull.clear();
+    }
+
+    public void set_list(List<Subscription> list) {
+        this.list.addAll(list);
+        this.listFull.addAll(list);
+    }
+
+
     public void removeItem(Subscription sub) {
         int index = this.list.indexOf(sub);
         this.list.remove(sub);
@@ -64,16 +78,25 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
         return new MainViewHolder(v);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
         Subscription currentSubscription = list.get(position);
 
-        holder.image.setImageResource(currentSubscription.getImage());
-        holder.change_image.setImageResource(currentSubscription.getChangeImage());
-        holder.title.setText(currentSubscription.getTitle());
+        holder.image.setImageResource(currentSubscription.getImageDrawable());
+        if (currentSubscription.getTitle().length() > 15) {
+            holder.title.setText(currentSubscription.getTitle().substring(0, 14));
+        } else {
+            holder.title.setText(currentSubscription.getTitle());
+        }
         holder.message.setText(currentSubscription.getMessage());
         holder.cost.setText(currentSubscription.getCost());
-        holder.change.setText(currentSubscription.getChange());
+        if (currentSubscription.accessChange() == 0) {
+            holder.change_image.setImageResource(currentSubscription.getChangeImage());
+            holder.change_image.setAlpha(0.00f);
+            holder.change.setText(currentSubscription.getChange());
+            holder.change.setAlpha(0.00f);
+        }
     }
 
     @Override
