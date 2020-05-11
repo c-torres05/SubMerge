@@ -87,7 +87,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
                 filteredList.addAll(subsListAll);
             } else {
                 for (Subscription subscription: subsListAll) {
-                    if (subscription.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                    if (subscription.getTitle().toLowerCase().contains(charSequence.toString().toLowerCase()) || subscription.getTitle().equals("Custom")) {
                         filteredList.add(subscription);
                     }
                 }

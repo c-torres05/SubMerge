@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.submerge.R;
 import com.example.submerge.calendar.CalendarView;
 import com.example.submerge.calendar.EventDay;
-import com.example.submerge.calendar.exceptions.OutOfDateRangeException;
 import com.example.submerge.calendar.listeners.OnCalendarPageChangeListener;
 import com.example.submerge.models.Subscription;
 import com.example.submerge.models.User;
@@ -29,7 +28,6 @@ import com.example.submerge.models.requests.Request;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -142,19 +140,6 @@ public class MainInterface extends AppCompatActivity {
     }
 
     public void goBackToLogin() {
-//        this.cost = 0;
-//        this.total_cost.setText("$0.00");
-//        this.subscriptions.clear();
-//        this.calendar.setEvents(Collections.emptyList());
-//        try {
-//            this.calendar.setDate(new Date());
-//        } catch (OutOfDateRangeException e) {
-//            Log.e(TAG, "INVALID DATE!");
-//        }
-//        refreshCalendar();
-//        this.adapter.notifyDataSetChanged();
-//        this.user = null;
-
         Intent login = new Intent(this, LoginHandler.class);
         login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(login);
@@ -173,14 +158,12 @@ public class MainInterface extends AppCompatActivity {
     public void gotoDetail(View v, int position) {
         Log.i("SubMerge-Info", "Going to Detail Page");
 
-//        DetailInterface.setDatabaseHandler(databaseHandler);
-//        DetailInterface.setNotificationHandler(notificationHandler);
-//
-//        Intent detail = new Intent(this, DetailInterface.class);
-//        User.encode_intent(detail, user);
-//        Subscription.encode_intent(detail, adapter.getList().get(position));
-//
-//        startActivityForResult(detail, 1);
+        Intent detail = new Intent(this, Unsubscribe.class);
+        User.encode_intent(detail, user);
+        detail.putExtra("from", "main");
+        Subscription.encode_intent(detail, adapter.getList().get(position));
+
+        startActivityForResult(detail, 1);
     }
 
     @Override

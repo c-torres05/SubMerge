@@ -27,8 +27,10 @@ import com.mongodb.stitch.core.StitchServiceException;
 
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class LoginHandler extends AppCompatActivity {
     Button anonymousLogin;
@@ -137,15 +139,57 @@ public class LoginHandler extends AppCompatActivity {
         if (newUser) {
             addUser(result -> {
                 if (result.isSuccessful()) {
-//                Calendar cal = Calendar.getInstance();
-//                Request add = new Request(result.getResult(), new Subscription("netflix", "Netflix - Basic", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
-//                Request add1 = new Request(result.getResult(), new Subscription("netflix", "Netflix - Basic", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 12.99, 0.00));
-//                Request add2 = new Request(result.getResult(), new Subscription("netflix", "Netflix - Basic", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 15.99, 0.00));
-//                Request add3 = new Request(result.getResult(), new Subscription("hulu", "Hulu", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00));
-//                handler.insertSearchSubscription(add, r -> {});
-//                handler.insertSearchSubscription(add1, r -> {});
-//                handler.insertSearchSubscription(add2, r -> {});
-//                handler.insertSearchSubscription(add3, r -> {});
+                    Calendar cal = Calendar.getInstance();
+//                    List<Request> add_requests = new ArrayList<>();
+//                    add_requests.add(new Request(result.getResult(), new Subscription("netflix", "Netflix", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 12.99, 0.00, "https://www.netflix.com/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("hulu", "Hulu", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 5.99, 0.00, "https://help.hulu.com/s/article/cancel-hulu-subscription?language=en_US")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("adobe", "Adobe", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 52.99, 0.00, "https://helpx.adobe.com/manage-account/using/cancel-subscription.html?promoid=CW7623QN&mv=other")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("amazonprime", "Amazon Prime", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 12.99, 0.00, "https://www.amazon.com/gp/help/customer/display.html?nodeId=GNQFBWDZJN838JZF")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("applemusic", "Apple Music", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, "https://support.apple.com/en-us/HT202039")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("appletvplus", "AppleTV+", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 4.99, 0.00, "https://support.apple.com/guide/tv/subscriptions-atvb0d233668/tvos")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("blueapron", "Blue Apron", false, cal.getTime(), Subscription.Recurrences.WEEKLY, 59.94, 0.00, "https://www.blueapron.com/users/sign_in")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("disney", "Disney+", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 6.99, 0.00, "https://www.disneyplus.com/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("dropbox", "DropBox", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, "https://help.dropbox.com/accounts-billing/cancellations-refunds/cancel-mobile")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("hbonow", "HBO Now", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 19.99, 0.00, "https://help.hbonow.com/Answer/Detail/206#cancel")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("ipsy", "Ipsy", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 10.00, 0.00, "https://help.ipsy.com/en_us/how-do-i-cancel-my-membership-B1nFSt4Vr")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("kindleunlimited", "Kindle Unlimited", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, "https://www.amazon.com/gp/help/customer/display.html?nodeId=GLSQ4722655M4ZEJ")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("pandora", "Pandora", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, "https://help.pandora.com/s/article/Cancel-your-Subscription-1519949295562?language=en_US")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("soundcloud", "Sound Cloud", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 4.99, 0.00, "https://help.soundcloud.com/hc/en-us/articles/115003562888")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("spotify", "Spotify", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, "https://support.spotify.com/us/article/how-to-cancel-your-subscription/")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("youtube", "Youtube", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 12.99, 0.00, "https://support.google.com/youtube/answer/6308278?co=GENIE.Platform%3DAndroid&hl=en")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("manscaped", "Manscaped", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 14.99, 0.00, "https://www.manscaped.com/account/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("bulubox", "Bulu Box", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 29.99, 0.00, "https://www.bulugroup.com")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("candyclub", "Candy Club", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 29.99, 0.00, "https://www.candyclub.com")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("munchpak", "MunchPak", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 22.95, 0.00, "https://munchpak.com/faq")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("lovewithfood", "Love With Food", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 7.99, 0.00, "https://lovewithfood.com/sign_in")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("urthbox", "UrthBox", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 14.99, 0.00, "https://www.urthbox.com/customer_login.php")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("lipmonthly", "Lip Monthly", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 12.95, 0.00, "https://lipmonthly.com/account/login?return_url=%2Faccount")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("naturebox", "Nature Box", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 24.99, 0.00, "https://support.naturebox.com/hc/en-us/articles/212404368-How-do-I-cancel-my-account-")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("winc", "Winc", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 39.99, 0.00, "https://support.winc.com/hc/en-us/articles/222813107-Can-I-cancel-my-membership-")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("birchbox", "Birch Box", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 13.00, 0.00, "https://support.birchbox.com/hc/en-us/articles/360031765091-Subscription-Plan-Cancellations")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("twitchprime", "Twitch Prime", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 10.99, 0.00, "https://help.twitch.tv/s/article/how-to-use-twitch-prime-subscriptions?language=en_US#FrequentlyAskedQuestions")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("carnivoreclub", "Carnivore Club", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 39.99, 0.00, "https://us.carnivoreclub.co/account/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("amcpremiere", "AMC Premiere", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 4.99, 0.00, "https://www.amc.com/account/")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("nintendo", "Switch Online", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 3.99, 0.00, "https://en-americas-support.nintendo.com/app/answers/detail/a_id/41191/~/can-i-cancel-my-nintendo-switch-online-membership%3F")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("switch_logo", "Switch", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 29.00, 0.00, "https://joinswitch.com/#")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("foodstirs", "Foodstirs", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 24.99, 0.00, "https://foodstirs.com/account/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("cairn", "Cairn", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 59.90, 0.00, "https://www.getcairn.com/account/login?return_url=%2Faccount")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("quirkycrate", "Quicky Crate", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 36.65, 0.00, "https://www.quirkycrate.com/account/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("dollarshaveclub", "Dollar Shave Club", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 40.00, 0.00, "https://www.dollarshaveclub.com/login?dsc_source=dsc&dsc_medium=header_nav")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("accio", "Accio", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 39.99, 0.00, "https://acciobox.cratejoy.com/customer/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("homechef", "Home Chef", false, cal.getTime(), Subscription.Recurrences.WEEKLY, 6.99, 0.00, "https://www.homechef.com/users/sign_in")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("stickii", "Stickii", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 10.00, 0.00, "https://members.stickii.club/customer/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("sayitwithasock", "Say It With A Sock", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 12.99, 0.00, "https://sayitwithasock.com/account")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("feelingfab", "Feeling Gab", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 21.95, 0.00, "https://www.feelingfabbox.com/customer/login")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("enchantmentbox", "Enchantment Box", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 39.95, 0.00, "https://boxes.hellosubscription.com/my-account/")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("inspiredbookclub", "Inspired Book Club", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 34.99, 0.00, "https://boxes.hellosubscription.com/my-account/")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("meundies", "Me Undies", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 16.00, 0.00, "https://www.meundies.com/?login=open")));
+//                    add_requests.add(new Request(result.getResult(), new Subscription("otakubox", "Oktaku Box", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 24.95, 0.00, "https://www.subbly.co/account/auth/login?store=theotakubox")));
+//
+//                    for (Request request : add_requests) {
+//                        handler.insertSearchSubscription(request, r -> {
+//                        });
+//                    }
                     User.encode_intent(main, result.getResult());
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     main.putExtra("from", loginType);

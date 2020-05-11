@@ -29,16 +29,15 @@ import java.util.Objects;
 public class Edit extends AppCompatActivity {
     static NotificationHandler notificationHandler;
     private static final String TAG = "SubMerge";
-    static DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
 
     String edit_type;
     Subscription subscription;
     User user;
 
     EditText sub_name;
-    EditText recur_payment;
     TextView displayDate;
     EditText sub_cost;
+    EditText web_url;
     Button saveButton;
 
 
@@ -58,6 +57,7 @@ public class Edit extends AppCompatActivity {
         displayDate = (TextView) findViewById(R.id.select_date);
         spinner = findViewById( R.id.recur_spinner);
         saveButton = findViewById(R.id.save_button);
+        web_url = (EditText) findViewById(R.id.url_input);
 
         initList();
         recurrenceAdapter = new RecurrenceAdapter(this, mRecurrList);
@@ -75,9 +75,10 @@ public class Edit extends AppCompatActivity {
             String recurrence = item.getRecurrence();
             String renewal = displayDate.getText().toString();
             String cost = sub_cost.getText().toString();
+            String url = web_url.getText().toString();
             subscription = new Subscription(subscription.getImage(), title, subscription.accessTrial(),
                     Subscription.renewalFromString(renewal),
-                    Subscription.recurrenceFromString(recurrence), Double.parseDouble(cost.substring(1)), subscription.accessChange());
+                    Subscription.recurrenceFromString(recurrence), Double.parseDouble(cost.substring(1)), subscription.accessChange(), url);
             gotoMainScreen();
         });
     }
@@ -97,6 +98,7 @@ public class Edit extends AppCompatActivity {
         RecurrenceItem recur = mRecurrList.remove(index);
         mRecurrList.add(0, recur);
         this.sub_cost.setText(subscription.getCost());
+        this.web_url.setText(subscription.getURL());
     }
 
     public void decodeIntent(Intent intent) {
