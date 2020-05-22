@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37.5dp"
+        android:layout_marginBottom="30dp"
         android:background="#F60303"
         android:fontFamily="@font/coolvetica_condensed"
         android:gravity="center_vertical|center"
@@ -21,15 +21,60 @@
         android:textColor="#FAF8F8"
         android:textSize="30sp"/>
 
+    <Button
+        android:id="@+id/remove"
+        android:layout_width="125dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#7E0707"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:gravity="center_vertical|center"
+        android:text="Remove From List"
+        android:textAlignment="center"
+        android:textColor="#FAF8F8"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/notify"
+        android:layout_width="125dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="#FFFFFF"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:gravity="center_vertical|center"
+        android:text="Test Notification"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="75dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/remove"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="#3F51B5"
+        android:fontFamily="@font/coolvetica_condensed"
+        android:gravity="center_vertical|center"
+        android:text="Edit"
+        android:textAlignment="center"
+        android:textColor="#FAF8F8"
+        android:textSize="20sp"/>
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="45dp"
         android:layout_marginStart="25dp"
-        android:fontFamily="@font/coolvetica_rg"
+        android:layout_marginTop="45dp"
+        android:fontFamily="@font/asap_medium"
         android:gravity="center_horizontal"
         android:text="Netflix"
         android:textAlignment="center"
@@ -43,7 +88,7 @@
         android:layout_below="@+id/title"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="75dp"
+        android:layout_marginRight="100dp"
         android:background="@color/colorPrimaryDark" />
 
     <TextView
@@ -54,7 +99,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/coolvetica_rg"
+        android:fontFamily="@font/asap_regular"
         android:text="Cost: "
         android:textColor="#000000"
         android:textSize="24sp" />
@@ -66,7 +111,7 @@
         android:layout_alignTop="@+id/cost_title"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="100dp"
-        android:fontFamily="@font/coolvetica_condensed"
+        android:fontFamily="@font/asap_regular"
         android:text="$14.99"
         android:textColor="#000000"
         android:textSize="22sp" />
@@ -79,18 +124,18 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/coolvetica_rg"
+        android:fontFamily="@font/asap_regular"
         android:text="Reccurence: "
         android:textColor="#000000"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/recurrence_value"
-        android:layout_width="83dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/payment_title"
         android:layout_alignStart="@+id/cost_value"
-        android:fontFamily="@font/coolvetica_condensed"
+        android:layout_alignTop="@+id/payment_title"
+        android:fontFamily="@font/asap_regular"
         android:text="Monthly"
         android:textColor="#000000"
         android:textSize="22sp" />
@@ -103,9 +148,9 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="60dp"
         android:layout_marginTop="15dp"
-        android:fontFamily="@font/coolvetica_rg"
+        android:fontFamily="@font/asap_regular"
         android:gravity="center_horizontal"
-        android:text="Renewal Date: "
+        android:text="Next Renewal: "
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp" />
@@ -114,9 +159,9 @@
         android:id="@+id/renewal_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/renewal_title"
         android:layout_alignStart="@+id/cost_value"
-        android:fontFamily="@font/coolvetica_condensed"
+        android:layout_alignTop="@+id/renewal_title"
+        android:fontFamily="@font/asap_regular"
         android:text="06/10/2020"
         android:textColor="#000000"
         android:textSize="22sp" />
@@ -128,7 +173,7 @@
         android:layout_below="@+id/renewal_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="35dp"
-        android:fontFamily="@font/coolvetica_rg"
+        android:fontFamily="@font/asap_medium"
         android:text="Payment History"
         android:textColor="#000000"
         android:textSize="30sp" />
@@ -140,20 +185,21 @@
         android:layout_alignTop="@+id/graph"
         android:layout_alignBottom="@+id/graph"
         android:layout_marginStart="10dp"
-        android:rotation="-90"
+        android:fontFamily="@font/asap_regular"
         android:gravity="center_vertical|center"
-        android:fontFamily="@font/coolvetica_rg"
+        android:rotation="-90"
         android:text="Cost"
         android:textColor="#000000"
         android:textSize="20sp" />
 
-    <com.jjoe64.graphview.GraphView
-        android:layout_width="wrap_content"
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/x_axis_label"
-        android:layout_below="@+id/payment_history_title"
-        android:layout_marginBottom="2dp"
+        android:layout_above="@+id/unsubscribe"
+        android:layout_below="@+id/x_axis_label"
+        android:layout_marginBottom="30dp"
         android:layout_toEndOf="@+id/y_axis_label"
+        android:tooltipText="A chart of the cost over time"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="10dp"
         android:id="@+id/graph"/>
@@ -162,12 +208,13 @@
         android:id="@+id/x_axis_label"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/unsubscribe"
-        android:layout_marginBottom="37.5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/payment_history_title"
         android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:fontFamily="@font/coolvetica_rg"
+        android:fontFamily="@font/asap_regular"
         android:text="Months"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="20sp" />
 </RelativeLayout>

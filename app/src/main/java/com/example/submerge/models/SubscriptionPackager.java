@@ -1,5 +1,6 @@
 package com.example.submerge.models;
 
+import org.bson.BsonArray;
 import org.bson.BsonBoolean;
 import org.bson.BsonDateTime;
 import org.bson.BsonDocument;
@@ -34,7 +35,11 @@ public class SubscriptionPackager {
         asDoc.put(Fields.OWNER_ID, new BsonString(item.accessOwnerId()));
         asDoc.put(Fields.TITLE, new BsonString(item.accessTitle()));
         asDoc.put(Fields.COST, new BsonDouble(item.accessCost()));
-        asDoc.put(Fields.CHANGE, new BsonDouble(item.accessChange()));
+        BsonArray array = new BsonArray();
+        for (int i = 0; i < item.accessChangeHistory().length; i++) {
+            array.add(new BsonDouble(item.accessChangeHistory()[i]));
+        }
+        asDoc.put(Fields.CHANGE, new BsonArray(array));
         asDoc.put(Fields.TRIAL, new BsonBoolean(item.accessTrial()));
         asDoc.put(Fields.RENEWAL, new BsonDateTime(item.accessRenewal()));
         asDoc.put(Fields.RECURRANCE, new BsonInt32(item.accessRecurrance()));
@@ -44,6 +49,11 @@ public class SubscriptionPackager {
     }
 
     public static Subscription fromBsonDocument(final BsonDocument doc) {
+        double[] change_history = new double[12];
+        BsonArray array = doc.getArray(Fields.CHANGE);
+        for (int i = 0; i < array.size(); i++) {
+            change_history[i] = array.get(i).asDouble().doubleValue();
+        }
         return new Subscription(
                 doc.getObjectId(Fields.ID).getValue(),
                 doc.getString(Fields.OWNER_ID).getValue(),
@@ -53,7 +63,7 @@ public class SubscriptionPackager {
                 doc.getDateTime(Fields.RENEWAL).getValue(),
                 doc.getInt32(Fields.RECURRANCE).getValue(),
                 doc.getDouble(Fields.COST).getValue(),
-                doc.getDouble(Fields.CHANGE).getValue(),
+                change_history,
                 doc.getString(Fields.URL).getValue()
         );
     }
