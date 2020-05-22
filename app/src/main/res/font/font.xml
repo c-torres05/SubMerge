@@ -3,17 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- regular -->
+    <!-- coolvetica regular -->
     <font
         android:font="@font/coolvetica_rg"
         android:fontStyle="normal"
         android:fontWeight="400" />
 
-    <!-- condensed -->
+    <!-- coolvetica condensed -->
     <font
 
         app:font="@font/coolvetica_condensed"
         app:fontStyle="normal"
         app:fontWeight="400" />
+
+    <!-- young -->
+    <font
+        android:font="@font/young"
+        android:fontStyle="normal"
+        android:fontWeight="400" />
+
+
+    <!-- asap -->
+    <font
+        app:font="@font/asap_regular"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
+    <font
+        app:font="@font/asap_medium"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
+    <font
+        app:font="@font/asap_bold"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
+    <font
+        app:font="@font/asap_semibold"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
 
 </font-family>

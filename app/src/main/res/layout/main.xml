@@ -23,11 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/coolvetica_rg"
-        android:text="Cost This Month"
+        android:fontFamily="@font/asap_regular"
+        android:text="Monthly Cost"
         android:textAlignment="center"
         android:textColor="@color/text"
-        android:textSize="30sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/current_cost"
@@ -36,11 +36,11 @@
         android:layout_below="@id/title"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/coolvetica_condensed"
+        android:fontFamily="@font/asap_regular"
         android:text="$35.99"
         android:textAlignment="center"
         android:textColor="@color/text"
-        android:textSize="40sp" />
+        android:textSize="37sp" />
     <com.example.submerge.calendar.CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"

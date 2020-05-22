@@ -21,7 +21,7 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/coolvetica_rg"
+            android:fontFamily="@font/asap_bold"
             android:gravity="center"
             android:text="@string/name"
             android:textColor="@color/text"
@@ -33,16 +33,16 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/shape"
-            android:fontFamily="@font/coolvetica_condensed"
+            android:fontFamily="@font/asap_regular"
             android:gravity="center"
             android:hint="@string/example"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="35dp" />
 
         <!--Renewal Date-->
         <TextView
@@ -50,7 +50,7 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/coolvetica_rg"
+            android:fontFamily="@font/asap_bold"
             android:gravity="center"
             android:text="@string/payment"
             android:textColor="@color/text"
@@ -62,15 +62,15 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/shape"
-            android:fontFamily="@font/coolvetica_condensed"
+            android:fontFamily="@font/asap_regular"
             android:gravity="center"
             android:text="@string/payment_ex"
             android:textColor="@color/text"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="35dp" />
 
         <!--Payment Recurrence-->
         <TextView
@@ -78,7 +78,7 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/coolvetica_rg"
+            android:fontFamily="@font/asap_bold"
             android:gravity="center"
             android:text="@string/recurrence"
             android:textColor="@color/text"
@@ -95,7 +95,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="35dp" />
 
         <!--Cost-->
         <TextView
@@ -103,7 +103,7 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/coolvetica_rg"
+            android:fontFamily="@font/asap_bold"
             android:gravity="center"
             android:text="@string/cost"
             android:textColor="@color/text"
@@ -115,16 +115,16 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/shape"
-            android:fontFamily="@font/coolvetica_condensed"
+            android:fontFamily="@font/asap_regular"
             android:gravity="center"
             android:hint="@string/cost_ex"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            android:layout_height="35dp" />
 
         <!--Cost-->
         <TextView
@@ -132,7 +132,7 @@
             android:layout_width="240dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/coolvetica_rg"
+            android:fontFamily="@font/asap_bold"
             android:gravity="center"
             android:text="@string/url"
             android:textColor="@color/text"
@@ -144,15 +144,15 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:background="@drawable/shape"
-            android:fontFamily="@font/coolvetica_condensed"
+            android:fontFamily="@font/asap_regular"
             android:gravity="center"
             android:hint="@string/url_ex"
             android:importantForAutofill="no"
-            android:textSize="25sp" />
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
 
         <Button
             android:id="@+id/save_button"
