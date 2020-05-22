@@ -356,7 +356,7 @@ public class DatabaseHandler {
                 Log.i(TAG, String.format("successfully found %d subscriptions", subscriptions.size()));
 
                 Calendar cal = Calendar.getInstance();
-                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, ""));
+                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, new double[12], ""));
                 for (Subscription sub : subscriptions) {
                     sub.setRenewal(cal.getTime());
                 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.submerge.R;
@@ -28,9 +29,9 @@ public class Subscription {
         Date renewal = renewalFromString(Objects.requireNonNull(intent.getStringExtra("sub_renewal")));
         int recurrence = recurrenceFromString(Objects.requireNonNull(intent.getStringExtra("sub_recurrence")));
         boolean trial = intent.getBooleanExtra("sub_trial", false);
-//        double change = intent.getDoubleExtra("sub_change", 0.00);
+        double[] change_history = intent.getDoubleArrayExtra("sub_change");
         String web_url = intent.getStringExtra("sub_web_url");
-        return new Subscription(image_key, String.format("%s", title), trial, renewal, recurrence, cost, web_url);
+        return new Subscription(image_key, String.format("%s", title), trial, renewal, recurrence, cost, change_history, web_url);
     }
 
     public static void encode_intent(Intent intent, Subscription subscription) {
@@ -40,7 +41,7 @@ public class Subscription {
         intent.putExtra("sub_renewal", renewalFromDate(new Date(subscription.accessRenewal())));
         intent.putExtra("sub_recurrence", recurrenceFromInt(subscription.accessRecurrance()));
         intent.putExtra("sub_trial", subscription.accessTrial());
-//        intent.putExtra("sub_change", subscription.accessChange());
+        intent.putExtra("sub_change", subscription.accessChangeHistory());
         intent.putExtra("sub_web_url", subscription.accessURL());
     }
 
@@ -143,8 +144,8 @@ public class Subscription {
     private double[] change_history;
     private boolean paid;
 
-    public Subscription(String image_key, String title, boolean trial, Date renewal, int recurrance, double cost, String web_url) {
-        this(new ObjectId(), "", image_key, title, trial, renewal.getTime(), recurrance, cost, new double[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}, web_url);
+    public Subscription(String image_key, String title, boolean trial, Date renewal, int recurrance, double cost, double[] change, String web_url) {
+        this(new ObjectId(), "", image_key, title, trial, renewal.getTime(), recurrance, cost, change, web_url);
         this.type = Types.MAIN;
     }
 
@@ -323,4 +324,24 @@ public class Subscription {
         this.renewal = time;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this)
+            return true;
+        else {
+            Subscription o = (Subscription) obj;
+            assert o != null;
+            if (!this.title.equals(o.title))
+                return false;
+            if (this.cost != o.cost)
+                return false;
+            Calendar me = Calendar.getInstance();
+            me.setTime(this.renewal);
+            Calendar you = Calendar.getInstance();
+            you.setTime(o.renewal);
+            if (me.get(Calendar.YEAR) != you.get(Calendar.YEAR) || me.get(Calendar.MONTH) != you.get(Calendar.MONTH) || me.get(Calendar.DAY_OF_YEAR) != you.get(Calendar.DAY_OF_YEAR))
+                return false;
+            return this.recurrance == o.recurrance;
+        }
+    }
 }

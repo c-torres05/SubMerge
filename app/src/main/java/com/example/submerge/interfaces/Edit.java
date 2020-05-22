@@ -88,8 +88,12 @@ public class Edit extends AppCompatActivity {
                 cost = cost.substring(1);
             subscription = new Subscription(subscription.getImage(), title, subscription.accessTrial(),
                     Subscription.renewalFromString(renewal),
-                    Subscription.recurrenceFromString(recurrence), Double.parseDouble(cost), url);
-            gotoMainScreen();
+                    Subscription.recurrenceFromString(recurrence), Double.parseDouble(cost), subscription.accessChangeHistory(), url);
+            if (edit_type.equals("edit-add")) {
+                gotoMainScreen();
+            } else {
+                gotoDetailScreen();
+            }
         });
     }
 
@@ -122,7 +126,7 @@ public class Edit extends AppCompatActivity {
                 updateValues(subscription);
                 edit_type = "edit-add";
                 break;
-            case "detail":
+            case "unsub":
                 subscription = Subscription.decode_intent(intent);
                 updateValues(subscription);
                 edit_type = "edit-edit";
@@ -134,6 +138,17 @@ public class Edit extends AppCompatActivity {
         Intent main = new Intent();
         main.putExtra("from", edit_type);
         User.encode_intent(main, user);
+        Subscription.encode_intent(main, subscription);
+
+        Log.i("SubMerge", "Going to Main screen");
+
+        setResult(Activity.RESULT_OK, main);
+        finish();
+    }
+
+    private void gotoDetailScreen() {
+        Intent main = new Intent();
+        main.putExtra("from", edit_type);
         Subscription.encode_intent(main, subscription);
 
         Log.i("SubMerge", "Going to Main screen");

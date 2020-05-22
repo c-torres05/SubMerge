@@ -1,5 +1,6 @@
 package com.example.submerge.interfaces;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,10 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.example.submerge.R;
+import com.example.submerge.models.NotificationData;
 import com.example.submerge.models.Subscription;
-import com.example.submerge.models.User;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -19,15 +25,16 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+
+import static com.example.submerge.interfaces.NotificationHandler.CHANNEL_ID;
+import static com.example.submerge.interfaces.NotificationHandler.createNotificationChannel;
 
 public class Unsubscribe extends AppCompatActivity {
 
@@ -37,8 +44,13 @@ public class Unsubscribe extends AppCompatActivity {
     TextView renewal_value;
     BarChart graph;
     Button unsubscribe;
+    Button remove;
+    Button edit;
+    Button notify;
 
     Subscription subscription;
+
+    NotificationHandler notificationHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,60 +63,44 @@ public class Unsubscribe extends AppCompatActivity {
         renewal_value = findViewById(R.id.renewal_value);
         graph = findViewById(R.id.graph);
         unsubscribe = findViewById(R.id.unsubscribe);
+        remove = findViewById(R.id.remove);
+        edit = findViewById(R.id.edit);
+        notify = findViewById(R.id.notify);
 
         decodeIntent(getIntent());
+        remove.setOnClickListener(v -> gotoMainScreen("unsub-remove"));
+        edit.setOnClickListener(v -> gotoEditScreen());
 
-        title.setText(subscription.getTitle());
-        cost_value.setText(String.format(Locale.ENGLISH, "$%.2f", subscription.accessCost()));
-        recurrence_value.setText(Subscription.recurrenceFromInt(subscription.accessRecurrance()));
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                gotoMainScreen("unsub");
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
+
+        notificationHandler = new NotificationHandler();
+        notificationHandler.mNotificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+        notificationHandler.notificationCompatBuilder = new NotificationCompat.Builder( getApplicationContext(), CHANNEL_ID);
+
+
+        notify.setOnClickListener(v -> {
+            NotificationData data = notificationHandler.createNotificationData(subscription);
+            createNotificationChannel(this, data);
+            notificationHandler.sendNotification(notificationHandler.createNotification(data), data);
+        });
+
         Calendar current = Calendar.getInstance();
-        Calendar sub = (Calendar) Calendar.getInstance().clone();
-        sub.setTime(new Date(subscription.accessRenewal()));
-
-        Log.i("SubMerge", sub.getTime().toString());
-        Log.i("SubMerge", current.getTime().toString());
-        while (sub.get(Calendar.DAY_OF_YEAR) < current.get(Calendar.DAY_OF_YEAR) && sub.get(Calendar.YEAR) < current.get(Calendar.YEAR)) {
-            Log.i("SubMerge", "add to date");
-            sub.add(Calendar.DAY_OF_YEAR, subscription.accessRecurrance());
-        }
-        Log.i("SubMerge", sub.getTime().toString());
-
-        renewal_value.setText(Subscription.renewalFromDate(new Date(sub.getTime().getTime())));
-
         int month = current.get(Calendar.MONTH);
         double[] change_history = subscription.accessChangeHistory();
 
-//        change_history[11] = 9.99;
-//        change_history[10] = 12.99;
-//        change_history[9] = 14.99;
-
         ArrayList<BarEntry> entries = new ArrayList<>();
-//        double max = -1;
         for (int i = 0, mon = month - 12; mon < month; i++, mon++) {
             if (change_history[i] != -1) {
                 entries.add(new BarEntry((float) mon, (float) change_history[i]));
-//                if (change_history[i] > max) {
-//                    max = change_history[i];
-//                }
             }
         }
-
-        entries.add(new BarEntry((float) month, (float) subscription.accessCost()));
-//        if (subscription.accessCost() > max)
-//            max = subscription.accessCost();
-//        max += 2;
-
-        BarDataSet dataSet = new BarDataSet(entries, "Cost");
-        dataSet.setColor(Color.parseColor("#00BDA0"));
-
-        BarData data = new BarData(dataSet);
-        data.setValueTextSize(10);
-        data.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return String.format(Locale.ENGLISH, "$%.2f", value);
-            }
-        });
 
         graph.setHorizontalScrollBarEnabled(false);
         graph.setHighlightPerTapEnabled(false);
@@ -119,9 +115,10 @@ public class Unsubscribe extends AppCompatActivity {
         Description desc = new Description();
         desc.setText("");
         graph.setDescription(desc);
-        graph.setData(data);
         graph.zoom(2, 1, 0, 0);
         graph.moveViewToX(4);
+
+        updateValues();
 
         XAxis xAxis = graph.getXAxis();
         xAxis.setDrawGridLines(false);
@@ -137,13 +134,10 @@ public class Unsubscribe extends AppCompatActivity {
                 return months[indx];
             }
         });
-//        xAxis.setAxisMinimum(); Set to the minimum of the renewal
         xAxis.setAxisMaximum(month + 1);
         xAxis.setAxisMinimum(month - 11);
 
         YAxis yAxisLeft = graph.getAxisLeft();
-//        yAxisLeft.setAxisMinimum(0);
-//        yAxisLeft.setAxisMaximum((float) max);
         yAxisLeft.setDrawGridLines(false);
         yAxisLeft.setValueFormatter(new ValueFormatter() {
             @Override
@@ -153,6 +147,57 @@ public class Unsubscribe extends AppCompatActivity {
         });
         YAxis yAxisRight = graph.getAxisRight();
         yAxisRight.setEnabled(false);
+    }
+
+    public void updateValues() {
+        title.setText(subscription.getTitle());
+        cost_value.setText(String.format(Locale.ENGLISH, "$%.2f", subscription.accessCost()));
+        recurrence_value.setText(Subscription.recurrenceFromInt(subscription.accessRecurrance()));
+        Calendar current = Calendar.getInstance();
+        Calendar sub = (Calendar) Calendar.getInstance().clone();
+        sub.setTime(new Date(subscription.accessRenewal()));
+
+
+        while (sub.get(Calendar.DAY_OF_YEAR) < current.get(Calendar.DAY_OF_YEAR) && sub.get(Calendar.YEAR) < current.get(Calendar.YEAR)) {
+            sub.add(Calendar.DAY_OF_YEAR, subscription.accessRecurrance());
+        }
+
+        renewal_value.setText(Subscription.renewalFromDate(new Date(sub.getTime().getTime())));
+
+        int month = current.get(Calendar.MONTH);
+        double[] change_history = subscription.accessChangeHistory();
+
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        for (int i = 0, mon = month - 12; mon < month; i++, mon++) {
+            if (change_history[i] != -1) {
+                entries.add(new BarEntry((float) mon, (float) change_history[i]));
+            }
+        }
+
+        Calendar cntMonth = Calendar.getInstance();
+        cntMonth.setTime(new Date(subscription.accessRenewal()));
+        while (cntMonth.get(Calendar.MONTH) < current.get(Calendar.MONTH) || cntMonth.get(Calendar.YEAR) < current.get(Calendar.YEAR)) {
+            cntMonth.add(Calendar.DAY_OF_YEAR, subscription.accessRecurrance());
+        }
+        int count = 0;
+        while (cntMonth.get(Calendar.MONTH) == current.get(Calendar.MONTH) && cntMonth.get(Calendar.YEAR) == current.get(Calendar.YEAR)) {
+            cntMonth.add(Calendar.DAY_OF_YEAR, subscription.accessRecurrance());
+            count++;
+        }
+        entries.add(new BarEntry((float) month, (float) subscription.accessCost() * count));
+
+        BarDataSet dataSet = new BarDataSet(entries, "Cost");
+        dataSet.setColor(Color.parseColor("#00BDA0"));
+
+        BarData data = new BarData(dataSet);
+        data.setValueTextSize(10);
+        data.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(Locale.ENGLISH, "$%.2f", value);
+            }
+        });
+        graph.setData(data);
     }
 
     public void loadWebPage(View v) {
@@ -166,6 +211,45 @@ public class Unsubscribe extends AppCompatActivity {
             case "main":
                 subscription = Subscription.decode_intent(intent);
                 break;
+            case "edit-edit":
+                subscription = Subscription.decode_intent(intent);
+                break;
         }
+    }
+
+    private void gotoMainScreen(String mode) {
+        Intent main = new Intent();
+        main.putExtra("from", mode);
+        Subscription.encode_intent(main, subscription);
+
+        Log.i("SubMerge", "Going to Main screen");
+
+        setResult(Activity.RESULT_OK, main);
+        finish();
+    }
+
+    private void gotoEditScreen() {
+        Intent edit = new Intent(this, Edit.class);
+        edit.putExtra("from", "unsub");
+        Subscription.encode_intent(edit, subscription);
+
+        Log.i("SubMerge", "Going to Edit screen");
+
+        startActivityForResult(edit, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            //handle result
+            assert data != null;
+            decodeIntent(data);
+            updateValues();
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            //do nothing
+        }
+
     }
 }
