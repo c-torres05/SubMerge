@@ -61,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25dp"
+            android:tooltipText="The cost per charge"
             android:textStyle="bold"
             android:textColor="@color/text"
             android:layout_marginLeft="25dp"

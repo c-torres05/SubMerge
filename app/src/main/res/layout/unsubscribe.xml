@@ -105,7 +105,7 @@
         android:layout_marginTop="15dp"
         android:fontFamily="@font/coolvetica_rg"
         android:gravity="center_horizontal"
-        android:text="Renewal Date: "
+        android:text="Next Renewal: "
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="24sp" />
@@ -127,7 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/renewal_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="25dp"
         android:fontFamily="@font/coolvetica_rg"
         android:text="Payment History"
         android:textColor="#000000"
@@ -147,13 +147,14 @@
         android:textColor="#000000"
         android:textSize="20sp" />
 
-    <com.jjoe64.graphview.GraphView
-        android:layout_width="wrap_content"
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/x_axis_label"
-        android:layout_below="@+id/payment_history_title"
-        android:layout_marginBottom="2dp"
+        android:layout_above="@+id/unsubscribe"
+        android:layout_below="@+id/x_axis_label"
+        android:layout_marginBottom="37.5dp"
         android:layout_toEndOf="@+id/y_axis_label"
+        android:tooltipText="A chart of the cost over time"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="10dp"
         android:id="@+id/graph"/>
@@ -162,8 +163,9 @@
         android:id="@+id/x_axis_label"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/unsubscribe"
-        android:layout_marginBottom="37.5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/payment_history_title"
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:fontFamily="@font/coolvetica_rg"

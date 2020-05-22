@@ -18,7 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.mongodb.lang.NonNull;
 import com.mongodb.stitch.android.core.Stitch;
 import com.mongodb.stitch.android.core.StitchAppClient;
+import com.mongodb.stitch.android.core.auth.StitchAuth;
 import com.mongodb.stitch.android.core.auth.StitchUser;
+import com.mongodb.stitch.android.core.auth.internal.StitchAuthImpl;
 import com.mongodb.stitch.android.core.auth.providers.userpassword.UserPasswordAuthProviderClient;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoClient;
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection;
@@ -79,7 +81,9 @@ public class DatabaseHandler {
         this.client = Stitch.getDefaultAppClient();
     }
 
-    private static void resetInstance() {instance = new DatabaseHandler();}
+    private static void resetInstance() {
+        instance = new DatabaseHandler();
+    }
 
     public static DatabaseHandler getInstance() {
         return instance;
@@ -132,18 +136,17 @@ public class DatabaseHandler {
         AnonCredential credential = new AnonCredential(name);
         this.name = name;
 
-        Stitch.getDefaultAppClient().getAuth().loginWithCredential(credential)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d("stitch", "logged in with custom function auth as user " + task.getResult().getId());
-                        userId = client.getAuth().getUser().getId();
-                        callback.onComplete(new Result<>(true, "", true));
-                    } else {
-                        Log.e("stitch", "failed to log in with custom function auth:", task.getException());
-                        userId = null;
-                        callback.onComplete(new Result<>(null, "Login failed!", false));
-                    }
-                });
+        this.client.getAuth().loginWithCredential(credential).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d("stitch", "logged in with custom function auth as user " + task.getResult().getId());
+                userId = this.client.getAuth().getUser().getId();
+                callback.onComplete(new Result<>(true, "", true));
+            } else {
+                Log.e("stitch", "failed to log in with custom function auth:", task.getException());
+                userId = null;
+                callback.onComplete(new Result<>(null, "Login failed!", false));
+            }
+        });
     }
 
     public void loginEmail(Callback<Boolean, String> callback, String username, String password) {
@@ -153,25 +156,31 @@ public class DatabaseHandler {
         this.name = username;
 
         UserPasswordCredential credential = new UserPasswordCredential(username, password);
-        Stitch.getDefaultAppClient().getAuth().loginWithCredential(credential).addOnCompleteListener(tryLogin -> {
+        this.client.getAuth().loginWithCredential(credential).addOnCompleteListener(tryLogin -> {
             if (tryLogin.isSuccessful()) {
                 Log.d("stitch", "Successfully logged in as user " + tryLogin.getResult().getId());
-                userId = client.getAuth().getUser().getId();
+                userId = tryLogin.getResult().getId();
                 callback.onComplete(new Result<>(false, "Failed!", true));
             } else {
-                UserPasswordAuthProviderClient emailPassClient = Stitch.getDefaultAppClient().getAuth().getProviderClient(
-                        UserPasswordAuthProviderClient.factory
-                );
+                UserPasswordAuthProviderClient emailPassClient = this.client.getAuth().getProviderClient(UserPasswordAuthProviderClient.factory);
                 emailPassClient.registerWithEmail(username, password).addOnCompleteListener(tryCreate -> {
                     if (tryCreate.isSuccessful()) {
                         Log.d("stitch", "Successfully made account!");
-                        Stitch.getDefaultAppClient().getAuth().loginWithCredential(credential).addOnCompleteListener(finishLogin -> {
-                            if (finishLogin.isSuccessful()) {
-                                Log.d("stitch", "Successfully logged in as user " + finishLogin.getResult().getId());
-                                userId = client.getAuth().getUser().getId();
+                        this.client.getAuth().loginWithCredential(credential).addOnCompleteListener(loginAgain -> {
+                            if (loginAgain.isSuccessful()) {
+                                Log.d("stitch", "Successfully logged in as user " + loginAgain.getResult().getId());
+                                userId = loginAgain.getResult().getId();
+//                                finishInit();
                                 callback.onComplete(new Result<>(true, "Failed!", true));
-                            } else {
-                                Log.e("stitch", "Error logging in with email/password auth:", finishLogin.getException());
+//                                User user = new User(new ObjectId(), userId, username, User.SUBMERGECLIENT_TYPE);
+//                                insertUser(user, result -> Stitch.getDefaultAppClient().getAuth().loginWithCredential(credential).addOnCompleteListener(finishLogin -> {
+//                                    if (finishLogin.isSuccessful()) {
+//                                        Log.d("stitch", "Successfully logged in as user " + finishLogin.getResult().getId());
+//
+//                                    } else {
+//                                        Log.e("stitch", "Error logging in with email/password auth:", finishLogin.getException());
+//                                    }
+//                                }));
                             }
                         });
                     } else {
@@ -192,10 +201,10 @@ public class DatabaseHandler {
 
         assert user != null;
 
-        findUser(user, result::onComplete);
+        findUserAndGet(user, result::onComplete);
     }
 
-    private void findUser(User user, Callback<User, String> result) {
+    private void findUserAndGet(User user, Callback<User, String> result) {
         String user_id = user.getUser_Id();
         Task<User> find_user_task = this.users.findOne(eq("user_id", user_id));
 
@@ -347,7 +356,7 @@ public class DatabaseHandler {
                 Log.i(TAG, String.format("successfully found %d subscriptions", subscriptions.size()));
 
                 Calendar cal = Calendar.getInstance();
-                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, 0.00, ""));
+                subscriptions.add(0, new Subscription("custom", "Custom", false, cal.getTime(), Subscription.Recurrences.MONTHLY, 9.99, ""));
                 for (Subscription sub : subscriptions) {
                     sub.setRenewal(cal.getTime());
                 }

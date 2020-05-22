@@ -143,15 +143,25 @@ class CalendarDayAdapter extends ArrayAdapter<Date> {
         eventGrid.removeAllViews();
         for (EventDay eventDay : days) {
             if (eventDay.getCalendar().get(Calendar.DAY_OF_YEAR) == day.get(Calendar.DAY_OF_YEAR)) {
-                ImageView new_event = new ImageView(getContext());
-                Log.i("SubMerge", "Add new image view");
-                ImageUtils.loadImage(new_event, eventDay.getImageDrawable());
-                // If a day doesn't belong to current month then image is transparent
-                if (!isCurrentMonthDay(day) || !isActiveDay(day)) {
-                    new_event.setAlpha(0.5f);
+                if (eventGrid.getChildCount() < 4) {
+                    ImageView new_event = new ImageView(getContext());
+
+                    ImageUtils.loadImage(new_event, eventDay.getImageDrawable());
+                    // If a day doesn't belong to current month then image is transparent
+                    if (!isCurrentMonthDay(day) || !isActiveDay(day)) {
+                        new_event.setAlpha(0.5f);
+                    }
+                    eventGrid.addView(new_event, 40, 40);
+//                    new_event.requestLayout();
+//                    new_event.invalidate();
+//                    new_event.requestLayout();
                 }
-                eventGrid.addView(new_event, 30, 30);
             }
         }
+//        eventGrid.setVisibility(View.GONE);
+//        eventGrid.setVisibility(View.VISIBLE);
+//        eventGrid.getParent().requestLayout();
+//        eventGrid.requestLayout();
+//        eventGrid.invalidate();
     }
 }
