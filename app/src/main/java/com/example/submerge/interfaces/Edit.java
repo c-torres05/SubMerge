@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.submerge.R;
 import com.example.submerge.models.Subscription;
@@ -28,6 +29,7 @@ import java.util.Objects;
 
 public class Edit extends AppCompatActivity {
     static NotificationHandler notificationHandler;
+    static DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
     private static final String TAG = "SubMerge";
 
     String edit_type;
@@ -70,21 +72,30 @@ public class Edit extends AppCompatActivity {
         decodeIntent(getIntent());
 
         saveButton.setOnClickListener(v -> {
+            if (sub_name.getText().toString().length() == 0 || sub_cost.getText().toString().length() == 0 || web_url.getText().toString().length() == 0) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Please complete all fields!", Toast.LENGTH_SHORT);
+                toast.show();
+                return;
+            }
+
             String title = sub_name.getText().toString();
             RecurrenceItem item = (RecurrenceItem) spinner.getSelectedItem();
             String recurrence = item.getRecurrence();
             String renewal = displayDate.getText().toString();
             String cost = sub_cost.getText().toString();
             String url = web_url.getText().toString();
+            if (cost.charAt(0) == '$')
+                cost = cost.substring(1);
             subscription = new Subscription(subscription.getImage(), title, subscription.accessTrial(),
                     Subscription.renewalFromString(renewal),
-                    Subscription.recurrenceFromString(recurrence), Double.parseDouble(cost.substring(1)), subscription.accessChange(), url);
+                    Subscription.recurrenceFromString(recurrence), Double.parseDouble(cost), url);
             gotoMainScreen();
         });
     }
 
     public void updateValues(Subscription subscription) {
-        this.sub_name.setText(subscription.getTitle());
+        if (!subscription.getTitle().equals("Custom"))
+            this.sub_name.setText(subscription.getTitle());
         this.displayDate.setText(subscription.getRenewal());
         Calendar c = Calendar.getInstance();
         datePickerDialog.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
@@ -97,8 +108,10 @@ public class Edit extends AppCompatActivity {
         }
         RecurrenceItem recur = mRecurrList.remove(index);
         mRecurrList.add(0, recur);
-        this.sub_cost.setText(subscription.getCost());
-        this.web_url.setText(subscription.getURL());
+        if (!subscription.getTitle().equals("Custom"))
+            this.sub_cost.setText(subscription.getCost());
+        if (!subscription.getTitle().equals("Custom"))
+            this.web_url.setText(subscription.getURL());
     }
 
     public void decodeIntent(Intent intent) {
@@ -123,7 +136,7 @@ public class Edit extends AppCompatActivity {
         User.encode_intent(main, user);
         Subscription.encode_intent(main, subscription);
 
-        Log.i("SubMerge", "Going to mAin screen");
+        Log.i("SubMerge", "Going to Main screen");
 
         setResult(Activity.RESULT_OK, main);
         finish();

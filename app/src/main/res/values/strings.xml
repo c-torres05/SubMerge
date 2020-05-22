@@ -1,7 +1,7 @@
 <resources>
     //App variables
     <string name="app_name">SubMerge</string>
-    <string name="stitch_client_app_id">submerge-fkmyh</string>
+    <string name="stitch_client_app_id">submerge-qfwln</string>
     //Main screen variables
     //text values
     <string name="main_add_text">+</string>

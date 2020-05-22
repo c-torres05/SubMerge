@@ -28,9 +28,9 @@ public class Subscription {
         Date renewal = renewalFromString(Objects.requireNonNull(intent.getStringExtra("sub_renewal")));
         int recurrence = recurrenceFromString(Objects.requireNonNull(intent.getStringExtra("sub_recurrence")));
         boolean trial = intent.getBooleanExtra("sub_trial", false);
-        double change = intent.getDoubleExtra("sub_change", 0.00);
+//        double change = intent.getDoubleExtra("sub_change", 0.00);
         String web_url = intent.getStringExtra("sub_web_url");
-        return new Subscription(image_key, String.format("%s", title), trial, renewal, recurrence, cost, change, web_url);
+        return new Subscription(image_key, String.format("%s", title), trial, renewal, recurrence, cost, web_url);
     }
 
     public static void encode_intent(Intent intent, Subscription subscription) {
@@ -40,7 +40,7 @@ public class Subscription {
         intent.putExtra("sub_renewal", renewalFromDate(new Date(subscription.accessRenewal())));
         intent.putExtra("sub_recurrence", recurrenceFromInt(subscription.accessRecurrance()));
         intent.putExtra("sub_trial", subscription.accessTrial());
-        intent.putExtra("sub_change", subscription.accessChange());
+//        intent.putExtra("sub_change", subscription.accessChange());
         intent.putExtra("sub_web_url", subscription.accessURL());
     }
 
@@ -140,18 +140,19 @@ public class Subscription {
     private Date renewal;
     private int recurrance;
     private double change;
+    private double[] change_history;
     private boolean paid;
 
-    public Subscription(String image_key, String title, boolean trial, Date renewal, int recurrance, double cost, double change, String web_url) {
-        this(new ObjectId(), "", image_key, title, trial, renewal.getTime(), recurrance, cost, change, web_url);
+    public Subscription(String image_key, String title, boolean trial, Date renewal, int recurrance, double cost, String web_url) {
+        this(new ObjectId(), "", image_key, title, trial, renewal.getTime(), recurrance, cost, new double[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}, web_url);
         this.type = Types.MAIN;
     }
 
     public Subscription(String image_key, String title, double cost) {
-        this(new ObjectId(), "", image_key, title, false, -1, -1, cost, 0.00, "");
+        this(new ObjectId(), "", image_key, title, false, -1, -1, cost, new double[] {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}, "");
     }
 
-    public Subscription(ObjectId _id, String owner_id, String image_key, String title, boolean trial, long renewal, int recurrance, double cost, double change, String web_url) {
+    public Subscription(ObjectId _id, String owner_id, String image_key, String title, boolean trial, long renewal, int recurrance, double cost, double[] change, String web_url) {
         this.type = Types.DATABASE;
         this._id = _id;
         this.owner_id = owner_id;
@@ -162,7 +163,8 @@ public class Subscription {
         this.paid = false;
         this.recurrance = recurrance;
         this.cost = cost;
-        this.change = change;
+        this.change_history = change;
+        this.change = this.change_history[11];
         this.web_url = web_url;
 
         if (this.change == 0.00)
@@ -171,6 +173,24 @@ public class Subscription {
             this.change_image = R.drawable.cost_up;
         else
             this.change_image = R.drawable.cost_down;
+    }
+
+    public Subscription(Subscription other_subscription) {
+        this.type = other_subscription.type;
+        this._id = other_subscription._id;
+        this.owner_id = other_subscription.owner_id;
+        this.image_key = other_subscription.image_key;
+        this.title = other_subscription.title;
+        this.trial = other_subscription.trial;
+        this.renewal = other_subscription.renewal;
+        this.paid = other_subscription.paid;
+        this.recurrance = other_subscription.recurrance;
+        this.cost = other_subscription.cost;
+        this.change_history = other_subscription.change_history;
+        this.change = other_subscription.change;
+        this.web_url = other_subscription.web_url;
+        this.change_image = other_subscription.change_image;
+        this.image = other_subscription.image;
     }
 
     /*
@@ -289,6 +309,10 @@ public class Subscription {
 
     public double accessChange() {
         return this.change;
+    }
+
+    public double[] accessChangeHistory() {
+        return this.change_history;
     }
 
     public String accessURL() {
