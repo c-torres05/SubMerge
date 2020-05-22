@@ -12,6 +12,7 @@
         android:background="@drawable/add_button"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:tooltipText="Add a new subscription"
         android:layout_height="40dp"
         android:layout_width="40dp"
         android:layout_marginTop="5dp"
@@ -23,24 +24,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/coolvetica_rg"
-        android:text="Cost This Month"
+        android:tooltipText="It's self explanatory"
+        android:fontFamily="@font/asap_regular"
+        android:text="Monthly Cost"
         android:textAlignment="center"
         android:textColor="@color/text"
-        android:textSize="30sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/current_cost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:tooltipText="The total cost per month, including multiple charges"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/coolvetica_condensed"
+        android:fontFamily="@font/asap_regular"
         android:text="$35.99"
         android:textAlignment="center"
         android:textColor="@color/text"
-        android:textSize="40sp" />
+        android:textSize="37sp" />
     <com.example.submerge.calendar.CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"
@@ -49,6 +52,7 @@
         app:headerColor="#252425"
         app:headerLabelColor="#FFFFFF"
         app:eventsEnabled="true"
+        android:tooltipText="The monthly view of all your subscriptions"
         app:todayLabelColor="@color/colorPrimaryDark"
         app:anotherMonthsDaysLabelsColor="#888787"
         app:abbreviationsBarColor="#FFFFFF"

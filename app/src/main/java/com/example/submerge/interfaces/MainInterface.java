@@ -73,9 +73,9 @@ public class MainInterface extends AppCompatActivity {
     public void makeListeners() {
         add_button.setOnClickListener(this::goToSearchPage);
 
-        notificationHandler = new NotificationHandler();
-        notificationHandler.mNotificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-        notificationHandler.notificationCompatBuilder = new NotificationCompat.Builder( getApplicationContext(), NotificationHandler.CHANNEL_ID);
+//        notificationHandler = new NotificationHandler();
+//        notificationHandler.mNotificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
+//        notificationHandler.notificationCompatBuilder = new NotificationCompat.Builder(getApplicationContext(), NotificationHandler.CHANNEL_ID);
 
         RecyclerItemClickListener.addTo(recyclerView).setOnItemClickListener((recyclerView, position, v) -> gotoDetail(v, position));
 
@@ -136,6 +136,22 @@ public class MainInterface extends AppCompatActivity {
                 break;
             case "edit-edit":
                 break;
+            case "unsub":
+                Log.i("SubMerge", "ALKUIWEGOPALIWYUEGFPAIUWYGVEBP:IAWUGBEPAIWUGE");
+                Subscription sub3 = Subscription.decode_intent(intent);
+                for (int i = 0; i < subscriptions.size(); i++) {
+                    if (subscriptions.get(i).equals(sub3)) {
+                        subscriptions.remove(i);
+                        break;
+                    }
+                }
+                subscriptions.add(sub3);
+                refreshCalendar();
+                break;
+            case "unsub-remove":
+                Subscription sub2 = Subscription.decode_intent(intent);
+                removeItem(sub2);
+                break;
         }
     }
 
@@ -162,6 +178,7 @@ public class MainInterface extends AppCompatActivity {
         User.encode_intent(detail, user);
         detail.putExtra("from", "main");
         Subscription.encode_intent(detail, adapter.getList().get(position));
+        removeItem(adapter.getList().get(position));
 
         startActivityForResult(detail, 1);
     }
@@ -253,8 +270,12 @@ public class MainInterface extends AppCompatActivity {
     }
 
     public void removeItem(Subscription sub) {
-        adapter.removeItem(sub);
-        this.cost -= sub.accessCost();
-        this.total_cost.setText(String.format(Locale.ENGLISH, "$%.2f", cost));
+        for (int i = 0; i < subscriptions.size(); i++) {
+            if (subscriptions.get(i).equals(sub)) {
+                subscriptions.remove(i);
+                break;
+            }
+        }
+        refreshCalendar();
     }
 }
