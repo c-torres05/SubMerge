@@ -69,10 +69,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="10dp"
-            android:fontFamily="@font/asap_medium"
-            android:textColor="@color/text"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/asap_medium"/>
 
         <TextView
             android:id="@+id/change"

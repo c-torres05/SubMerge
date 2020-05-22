@@ -129,7 +129,7 @@
             android:hint="@string/cost_ex"
             android:importantForAutofill="no"
             android:inputType="numberDecimal"
-            android:textSize="20p"
+            android:textSize="20sp"
             android:nextFocusForward="@id/url_input"
             android:nextFocusUp="@id/recur_spinner"
             android:nextFocusDown="@id/url_input"/>
@@ -160,7 +160,7 @@
             android:gravity="center"
             android:hint="@string/url_ex"
             android:importantForAutofill="no"
-            android:textSize="20p"
+            android:textSize="20sp"
             android:nextFocusForward="@id/save_button"
             android:nextFocusUp="@id/cost_input"
             android:nextFocusDown="@id/save_button"/>

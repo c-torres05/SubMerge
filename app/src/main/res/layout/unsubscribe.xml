@@ -167,7 +167,6 @@
         android:layout_marginTop="15dp"
         android:layout_below="@+id/payment_history_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="37.5dp"
         android:fontFamily="@font/asap_regular"
         android:text="Months"
         android:textAlignment="center"
